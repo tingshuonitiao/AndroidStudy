@@ -29,22 +29,14 @@ public class SelfAdaptingViewPager extends ViewPager {
     //在View的绘制过程中此方法会被多次调用,每次都会测量出新的数据,我们用最新的数据替换旧的数据
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        /**
-         *遍历ViewPager所有的child
-         *注意:
-         *API > 19时,i = 0对应的是第二个fragment的view
-         *i = 1 对应的是第一个fragment的view
-         *API <= 19时,i = 0对应的是第一个fragment的view
-         *i = 1 对应的是第二个fragment的view(暂时不知道为什么)
-         */
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             int h = child.getMeasuredHeight();
-            Log.d("MyViewPager", "measuredHeight=" + h);
-            Log.d("MyViewPager", "getChildCount=" + getChildCount());
-            Log.d("MyViewPager", "getChildAt(i)=" + i);
-           /* Log.d("MyViewPager", "getChildAt(i).getId())=" + getChildAt(i).getId());
+            Log.d("SelfAdaptingViewPager", "measuredHeight=" + h);
+            Log.d("SelfAdaptingViewPager", "getChildCount=" + getChildCount());
+            Log.d("SelfAdaptingViewPager", "getChildAt(i)=" + i);
+           /* Log.d("SelfAdaptingViewPager", "getChildAt(i).getId())=" + getChildAt(i).getId());
             if (Build.VERSION.SDK_INT > 19) {
                 map.put(Math.abs(i - 1), h);
             } else {*/
@@ -52,9 +44,9 @@ public class SelfAdaptingViewPager extends ViewPager {
             //            }
         }
         int height = 0;
-        //onMeasure第一次被调用的时候,遍历不到child(暂时不知道为什么)
+        //onMeasure第一次被调用的时候,遍历不到child(View的绘制流程只是了解最基本的，我就不解释了)
         height = map.get(currentPosition) == null ? 0 : map.get(currentPosition);
-        Log.d("MyViewPager", "height=" + height);
+        Log.d("SelfAdaptingViewPager", "height=" + height);
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
