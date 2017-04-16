@@ -1,4 +1,4 @@
-package com.example.tsnt;
+package com.example.tsnt.view.SelfAdaptingViewPager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,15 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tsnt.R;
+
 /**
  * Created by ting说你跳 on 2017/3/12.
  */
 
-public class BlueFragment extends Fragment {
+public class RedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_blue, null);
+        View view = inflater.inflate(R.layout.fragment_red, null);
         return view;
     }
 }

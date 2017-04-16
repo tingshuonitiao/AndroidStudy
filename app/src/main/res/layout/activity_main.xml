@@ -1,44 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <com.example.tsnt.view.HorizontalScollview.MyHorizontalScrollView2
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@android:color/holo_green_light"
-                android:gravity="center"
-                android:text="Hello World"
-                android:textSize="50dp"/>
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="@android:color/holo_green_light"
-                app:tabSelectedTextColor="@android:color/holo_green_light"
-                app:tabTextColor="@android:color/darker_gray"/>
-
-            <com.example.tsnt.SelfAdaptingViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:background="@android:color/black" />
 
 </RelativeLayout>

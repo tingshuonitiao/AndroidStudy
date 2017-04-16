@@ -1,4 +1,4 @@
-package com.example.tsnt;
+package com.example.tsnt.view.SelfAdaptingViewPager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

@@ -1,4 +1,4 @@
-package com.example.tsnt;
+package com.example.tsnt.view.SelfAdaptingViewPager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

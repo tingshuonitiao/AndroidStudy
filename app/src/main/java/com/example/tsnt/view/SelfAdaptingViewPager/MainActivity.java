@@ -1,10 +1,12 @@
-package com.example.tsnt;
+package com.example.tsnt.view.SelfAdaptingViewPager;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.tsnt.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_selfadapting_viewpager);
         initView();
     }
 
