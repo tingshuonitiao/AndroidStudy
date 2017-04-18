@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.StatFs;
 import android.util.Log;
 import android.util.LruCache;
@@ -36,17 +38,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MyImageLoader {
     private static final String TAG = "MyImageLoader";
 
-    private static final long DISK_CACHE_SIZE = 1024 * 1024 * 50;
-    private static final int IO_BUFFER_SIZE = 8 * 1024;
-    private static final int TAG_KEY_URI = 0;
-    private static final int DISK_CACHE_INDEX = 0;
+    private boolean mIsDiskLruCacheCreated;
+    private static final long DISK_CACHE_SIZE  = 1024 * 1024 * 50;
+    private static final int  IO_BUFFER_SIZE   = 8 * 1024;
+    private static final int  TAG_KEY_URI      = 0;
+    private static final int  DISK_CACHE_INDEX = 0;
 
-    private static final int CPU_COUNT = Runtime.getRuntime()
+    private static final int           CPU_COUNT         = Runtime.getRuntime()
             .availableProcessors();
-    private static final int CORE_POOL_SIZE = CPU_COUNT + 1;
-    private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
-    private static final long KEEP_ALIVE = 10L;
-    private static final ThreadFactory sThreadFactory = new ThreadFactory() {
+    private static final int           CORE_POOL_SIZE    = CPU_COUNT + 1;
+    private static final int           MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
+    private static final long          KEEP_ALIVE        = 10L;
+    private static final ThreadFactory sThreadFactory    = new ThreadFactory() {
         private final AtomicInteger mCount = new AtomicInteger(1);
 
         public Thread newThread(Runnable r) {
@@ -55,17 +58,38 @@ public class MyImageLoader {
     };
 
     private LruCache<String, Bitmap> mMemoryCache;
-    private DiskLruCache mDiskLruCache;
+    private DiskLruCache             mDiskLruCache;
     public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
             CORE_POOL_SIZE, MAXIMUM_POOL_SIZE,
             KEEP_ALIVE, TimeUnit.SECONDS,
             new LinkedBlockingQueue<Runnable>(), sThreadFactory);
     private MyImageResizer mMyImageResizer;
 
+    private Handler mMainHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            ImageLoader.LoaderResult result = (ImageLoader.LoaderResult) msg.obj;
+            ImageView imageView = result.imageView;
+            imageView.setImageBitmap(result.bitmap);
+            String uri = (String) imageView.getTag(TAG_KEY_URI);
+            if (uri.equals(result.uri)) {
+                imageView.setImageBitmap(result.bitmap);
+            } else {
+                Log.w(TAG, "set image bitmap,but url has changed, ignored!");
+            }
+        }
+    };
+
+
     private MyImageLoader(Context context) {
         int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         int cacheSize = maxMemory / 8;
-        mMemoryCache = new LruCache<>(maxMemory);
+        mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+            }
+        };
         File diskCacheDir = getDiskCacheDir(context, "bitmap");
         if (!diskCacheDir.exists()) {
             diskCacheDir.mkdirs();
@@ -73,6 +97,7 @@ public class MyImageLoader {
         if (getUsableSpace(diskCacheDir) > DISK_CACHE_SIZE) {
             try {
                 mDiskLruCache.open(diskCacheDir, 1, 1, DISK_CACHE_SIZE);
+                mIsDiskLruCacheCreated = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -87,7 +112,7 @@ public class MyImageLoader {
         bindBitmap(uri, imageView, 0, 0);
     }
 
-    private void bindBitmap(String uri, ImageView imageView, int reqWidth, int reqHeight) {
+    private void bindBitmap(final String uri, final ImageView imageView, final int reqWidth, final int reqHeight) {
         imageView.setTag(TAG_KEY_URI, uri);
         Bitmap bitmap = getBitmapFromMemoryCache(uri);
         if (bitmap != null) {
@@ -98,9 +123,15 @@ public class MyImageLoader {
         Runnable loadBitmapTask = new Runnable() {
             @Override
             public void run() {
+                Bitmap bitmap = loadBitmap(uri, reqWidth, reqHeight);
+                if (bitmap != null) {
+                    LoaderResult result = new LoaderResult(imageView, uri, bitmap);
 
+                }
             }
         };
+
+        THREAD_POOL_EXECUTOR.execute(loadBitmapTask);
     }
 
     public Bitmap loadBitmap(String uri, int reqWidth, int reqHeight) {
@@ -110,7 +141,7 @@ public class MyImageLoader {
             return bitmap;
         }
 
-        /*try {
+        try {
             bitmap = loadBitmapFromDiskCache(uri, reqWidth, reqHeight);
             if (bitmap != null) {
                 Log.d(TAG, "loadBitmapFromDisk,url:" + uri);
@@ -121,23 +152,11 @@ public class MyImageLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         if (bitmap == null && !mIsDiskLruCacheCreated) {
             Log.w(TAG, "encounter error, DiskLruCache is not created.");
             bitmap = downloadBitmapFromUrl(uri);
-        }*/
-
-        return bitmap;
-    }
-
-    private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
-        if (getBitmapFromMemoryCache(key) == null) {
-            mMemoryCache.put(key, bitmap);
         }
-    }
-
-    private Bitmap getBitmapFromMemoryCache(String key) {
-        return mMemoryCache.get(key);
+        return bitmap;
     }
 
     private Bitmap loadBitmapFromMemoryCache(String url) {
@@ -166,6 +185,27 @@ public class MyImageLoader {
             }
         }
         return bitmap;
+    }
+
+    private Bitmap loadBitmapFromHttp(String uri, int reqWidth, int reqHeight) throws IOException {
+        if (Looper.getMainLooper() == Looper.myLooper()) {
+            throw new RuntimeException("can not visit network from UI Thread.");
+        }
+        if (mDiskLruCache != null) {
+            return null;
+        }
+        String key = hashKeyFormUrl(uri);
+        DiskLruCache.Editor editor = mDiskLruCache.edit(key);
+        if (editor != null) {
+            OutputStream outputStream = editor.newOutputStream(DISK_CACHE_INDEX);
+            if (downloadUrlToStream(uri, outputStream)) {
+                editor.commit();
+            } else {
+                editor.abort();
+            }
+            mDiskLruCache.flush();
+        }
+        return loadBitmapFromDiskCache(uri, reqWidth, reqHeight);
     }
 
     private boolean downloadUrlToStream(String urlString, OutputStream outputStream) {
@@ -232,6 +272,16 @@ public class MyImageLoader {
         return bitmap;
     }
 
+    private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemoryCache(key) == null) {
+            mMemoryCache.put(key, bitmap);
+        }
+    }
+
+    private Bitmap getBitmapFromMemoryCache(String key) {
+        return mMemoryCache.get(key);
+    }
+
     private String hashKeyFormUrl(String url) {
         String cacheKey;
         try {
@@ -270,5 +320,17 @@ public class MyImageLoader {
     private long getUsableSpace(File path) {
         StatFs statFs = new StatFs(path.getPath());
         return (long) statFs.getBlockSize() * (long) statFs.getAvailableBlocks();
+    }
+
+    private static class LoaderResult {
+        public ImageView imageView;
+        public String    uri;
+        public Bitmap    bitmap;
+
+        public LoaderResult(ImageView imageView, String uri, Bitmap bitmap) {
+            this.imageView = imageView;
+            this.uri = uri;
+            this.bitmap = bitmap;
+        }
     }
 }

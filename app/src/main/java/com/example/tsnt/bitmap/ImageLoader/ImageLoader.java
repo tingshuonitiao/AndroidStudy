@@ -353,7 +353,7 @@ public class ImageLoader {
         return (long) stats.getBlockSize() * (long) stats.getAvailableBlocks();
     }
 
-    private static class LoaderResult {
+    static class LoaderResult {
         public ImageView imageView;
         public String uri;
         public Bitmap bitmap;
