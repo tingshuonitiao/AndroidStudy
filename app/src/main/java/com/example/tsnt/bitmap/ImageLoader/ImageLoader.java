@@ -15,6 +15,8 @@ import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.example.tsnt.R;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -45,8 +47,7 @@ public class ImageLoader {
     private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
     private static final long KEEP_ALIVE = 10L;
 
-    //    private static final int TAG_KEY_URI = R.id.imageloader_uri;
-    private static final int TAG_KEY_URI = 0;
+    private static final int TAG_KEY_URI = R.id.imageloader_uri;
     private static final long DISK_CACHE_SIZE = 1024 * 1024 * 50;
     private static final int IO_BUFFER_SIZE = 8 * 1024;
     private static final int DISK_CACHE_INDEX = 0;

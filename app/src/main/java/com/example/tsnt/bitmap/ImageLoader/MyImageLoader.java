@@ -12,6 +12,8 @@ import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 
+import com.example.tsnt.R;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -31,6 +33,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.example.tsnt.bitmap.ImageLoader.ImageLoader.MESSAGE_POST_RESULT;
+
 /**
  * Created by ting说你跳 on 2017/4/16.
  */
@@ -41,7 +45,7 @@ public class MyImageLoader {
     private boolean mIsDiskLruCacheCreated;
     private static final long DISK_CACHE_SIZE  = 1024 * 1024 * 50;
     private static final int  IO_BUFFER_SIZE   = 8 * 1024;
-    private static final int  TAG_KEY_URI      = 0;
+    private static final int TAG_KEY_URI = R.id.imageloader_uri;
     private static final int  DISK_CACHE_INDEX = 0;
 
     private static final int           CPU_COUNT         = Runtime.getRuntime()
@@ -63,14 +67,15 @@ public class MyImageLoader {
             CORE_POOL_SIZE, MAXIMUM_POOL_SIZE,
             KEEP_ALIVE, TimeUnit.SECONDS,
             new LinkedBlockingQueue<Runnable>(), sThreadFactory);
-    private MyImageResizer mMyImageResizer;
+
+    private        MyImageResizer mMyImageResizer;
+    private static MyImageLoader  mMyImageLoader;
 
     private Handler mMainHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             ImageLoader.LoaderResult result = (ImageLoader.LoaderResult) msg.obj;
             ImageView imageView = result.imageView;
-            imageView.setImageBitmap(result.bitmap);
             String uri = (String) imageView.getTag(TAG_KEY_URI);
             if (uri.equals(result.uri)) {
                 imageView.setImageBitmap(result.bitmap);
@@ -104,8 +109,15 @@ public class MyImageLoader {
         }
     }
 
-    public static MyImageLoader build(Context context) {
-        return new MyImageLoader(context);
+    public MyImageLoader build(Context context) {
+        if (mMyImageLoader == null) {
+            synchronized (MyImageLoader.this) {
+                if (mMyImageLoader == null) {
+                    mMyImageLoader = new MyImageLoader(context);
+                }
+            }
+        }
+        return mMyImageLoader;
     }
 
     public void bindBitmap(final String uri, final ImageView imageView) {
@@ -126,7 +138,7 @@ public class MyImageLoader {
                 Bitmap bitmap = loadBitmap(uri, reqWidth, reqHeight);
                 if (bitmap != null) {
                     LoaderResult result = new LoaderResult(imageView, uri, bitmap);
-
+                    mMainHandler.obtainMessage(MESSAGE_POST_RESULT, result).sendToTarget();
                 }
             }
         };
