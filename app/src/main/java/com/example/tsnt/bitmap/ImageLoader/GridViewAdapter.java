@@ -1,5 +1,7 @@
 package com.example.tsnt.bitmap.ImageLoader;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,9 +18,22 @@ import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
     private List<String> mList = new ArrayList<>();
+    private       MyImageLoader mMyImageLoader;
+    private       Context       mContext;
+    private final int           mImageWidth;
+    private       boolean       mCanBeUpdated;
+    private       Drawable      mDefaultBitmapDrawable;
 
-    public GridViewAdapter(List<String> list) {
+    public GridViewAdapter(List<String> list, Context context) {
         mList = list;
+        mContext = context;
+        mDefaultBitmapDrawable = context.getResources().getDrawable(R.drawable.image_default);
+        if (mMyImageLoader == null) {
+            mMyImageLoader = MyImageLoader.build(context);
+        }
+        int screenWidth = MyUtils.getScreenMetrics(mContext).widthPixels;
+        int space = (int) MyUtils.dp2px(mContext, 20f);
+        mImageWidth = (screenWidth - space) / 3;
     }
 
     @Override
@@ -27,7 +42,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public String getItem(int position) {
         return mList.get(position);
     }
 
@@ -41,18 +56,29 @@ public class GridViewAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = View.inflate(parent.getContext(), R.layout.gridview_item_imageloader, null);
+            convertView = View.inflate(mContext, R.layout.gridview_item_imageloader, null);
             holder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        //        ImageLoader.build(parent.getContext()).bindBitmap(mList.get(position), holder.imageView);
-        holder.imageView.setImageBitmap(MyImageResizer.compressImage(parent.getResources(), R.mipmap.timg, 100, 100));
+        final String tag = (String) holder.imageView.getTag();
+        final String uri = getItem(position);
+        if (!uri.equals(tag)) {
+            holder.imageView.setImageDrawable(mDefaultBitmapDrawable);
+        }
+        if (mCanBeUpdated) {
+            holder.imageView.setTag(uri);
+            mMyImageLoader.bindBitmap(mList.get(position), holder.imageView, mImageWidth, mImageWidth);
+        }
         return convertView;
     }
 
-    private class ViewHolder {
+    public void setCanBeUpdated(boolean canBeUpdated) {
+        mCanBeUpdated = canBeUpdated;
+    }
+
+    private static class ViewHolder {
         ImageView imageView;
     }
 }

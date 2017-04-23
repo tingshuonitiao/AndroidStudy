@@ -33,19 +33,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.example.tsnt.bitmap.ImageLoader.ImageLoader.MESSAGE_POST_RESULT;
-
 /**
  * Created by ting说你跳 on 2017/4/16.
  */
 
 public class MyImageLoader {
-    private static final String TAG = "MyImageLoader";
+    public static final  int    MESSAGE_POST_RESULT = 1;
+    private static final String TAG                 = "MyImageLoader";
 
     private boolean mIsDiskLruCacheCreated;
     private static final long DISK_CACHE_SIZE  = 1024 * 1024 * 50;
     private static final int  IO_BUFFER_SIZE   = 8 * 1024;
-    private static final int TAG_KEY_URI = R.id.imageloader_uri;
+    private static final int  TAG_KEY_URI      = R.id.imageloader_uri;
     private static final int  DISK_CACHE_INDEX = 0;
 
     private static final int           CPU_COUNT         = Runtime.getRuntime()
@@ -74,7 +73,7 @@ public class MyImageLoader {
     private Handler mMainHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-            ImageLoader.LoaderResult result = (ImageLoader.LoaderResult) msg.obj;
+            LoaderResult result = (LoaderResult) msg.obj;
             ImageView imageView = result.imageView;
             String uri = (String) imageView.getTag(TAG_KEY_URI);
             if (uri.equals(result.uri)) {
@@ -95,13 +94,15 @@ public class MyImageLoader {
                 return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
             }
         };
-        File diskCacheDir = getDiskCacheDir(context, "bitmap");
+        File diskCacheDir = getDiskCacheDir(context.getApplicationContext(), "bitmap");
         if (!diskCacheDir.exists()) {
             diskCacheDir.mkdirs();
         }
         if (getUsableSpace(diskCacheDir) > DISK_CACHE_SIZE) {
             try {
-                mDiskLruCache.open(diskCacheDir, 1, 1, DISK_CACHE_SIZE);
+                //// TODO: 2017/4/20
+                mDiskLruCache = DiskLruCache.open(diskCacheDir, 1, 1, DISK_CACHE_SIZE);
+                mMyImageResizer = new MyImageResizer();
                 mIsDiskLruCacheCreated = true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -109,22 +110,23 @@ public class MyImageLoader {
         }
     }
 
-    public MyImageLoader build(Context context) {
-        if (mMyImageLoader == null) {
-            synchronized (MyImageLoader.this) {
+    public static MyImageLoader build(Context context) {
+        /*if (mMyImageLoader == null) {
+            synchronized (MyImageLoader.class) {
                 if (mMyImageLoader == null) {
                     mMyImageLoader = new MyImageLoader(context);
                 }
             }
         }
-        return mMyImageLoader;
+        return mMyImageLoader;*/
+        return new MyImageLoader(context);
     }
 
     public void bindBitmap(final String uri, final ImageView imageView) {
         bindBitmap(uri, imageView, 0, 0);
     }
 
-    private void bindBitmap(final String uri, final ImageView imageView, final int reqWidth, final int reqHeight) {
+    public void bindBitmap(final String uri, final ImageView imageView, final int reqWidth, final int reqHeight) {
         imageView.setTag(TAG_KEY_URI, uri);
         Bitmap bitmap = getBitmapFromMemoryCache(uri);
         if (bitmap != null) {
@@ -203,7 +205,7 @@ public class MyImageLoader {
         if (Looper.getMainLooper() == Looper.myLooper()) {
             throw new RuntimeException("can not visit network from UI Thread.");
         }
-        if (mDiskLruCache != null) {
+        if (mDiskLruCache == null) {
             return null;
         }
         String key = hashKeyFormUrl(uri);
@@ -230,7 +232,7 @@ public class MyImageLoader {
             in = new BufferedInputStream(httpURLConnection.getInputStream(), IO_BUFFER_SIZE);
             out = new BufferedOutputStream(outputStream, IO_BUFFER_SIZE);
             int b;
-            while ((b = in.read()) != 0) {
+            while ((b = in.read()) != -1) {
                 out.write(b);
             }
             return true;

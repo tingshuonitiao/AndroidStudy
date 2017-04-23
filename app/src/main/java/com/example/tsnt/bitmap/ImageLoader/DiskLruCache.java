@@ -72,7 +72,7 @@ import java.util.concurrent.TimeUnit;
  * deleted. The limit does not include filesystem overhead or the cache
  * journal so space-sensitive applications should set a conservative limit.
  *
- * <p>Clients call {@link #edit} to create or update the values of an entry. An
+ * <p>Clients call {@link #edit} to create or setCanBeUpdated the values of an entry. An
  * entry may have only one editor at one time; if a value is not available to be
  * edited then {@link #edit} will return null.
  * <ul>

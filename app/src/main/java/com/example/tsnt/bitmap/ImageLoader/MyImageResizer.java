@@ -34,9 +34,13 @@ public class MyImageResizer {
     }
 
     private static void setInSampleOptions(int reqWidth, int reqHeight, BitmapFactory.Options options) {
-        int size1 = options.outWidth / reqWidth;
-        int size2 = options.outHeight / reqHeight;
-        options.inSampleSize = size1 > size2 ? size1 : size2;
+        if (reqWidth == 0 || reqHeight == 0) {
+            options.inSampleSize = 1;
+        } else {
+            int size1 = options.outWidth / reqWidth;
+            int size2 = options.outHeight / reqHeight;
+            options.inSampleSize = size1 > size2 ? size1 : size2;
+        }
         options.inJustDecodeBounds = false;
     }
 }
