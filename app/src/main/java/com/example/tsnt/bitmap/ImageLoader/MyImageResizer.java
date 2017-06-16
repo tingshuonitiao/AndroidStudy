@@ -43,4 +43,17 @@ public class MyImageResizer {
         }
         options.inJustDecodeBounds = false;
     }
+
+    //dstWidth和dstHeight分别为目标ImageView的宽高
+    public static int calSampleSize(BitmapFactory.Options options, int dstWidth, int dstHeight) {
+        int rawWidth = options.outWidth;
+        int rawHeight = options.outHeight;
+        int inSampleSize = 1;
+        if (rawWidth > dstWidth || rawHeight > dstHeight) {
+            float ratioHeight = (float) rawHeight / dstHeight;
+            float ratioWidth = (float) rawWidth / dstHeight;
+            inSampleSize = (int) Math.min(ratioWidth, ratioHeight);
+        }
+        return inSampleSize;
+    }
 }

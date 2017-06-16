@@ -1,4 +1,4 @@
-package com.example.tsnt.view.HorizontalScollview;
+package com.example.tsnt.view.HorizontalScollview.reference;
 
 import android.content.Context;
 import android.util.AttributeSet;

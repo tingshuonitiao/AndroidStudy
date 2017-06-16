@@ -1,4 +1,4 @@
-package com.example.tsnt.view.HorizontalScollview;
+package com.example.tsnt.view.HorizontalScollview.reference;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,16 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 
-public class HorizontalScrollViewEx2 extends ViewGroup {
-    private static final String TAG = "HorizontalScrollViewEx2";
+public class HorizontalScrollViewEx extends ViewGroup {
+    private static final String TAG = "HorizontalScrollViewEx";
 
     private int mChildrenSize;
     private int mChildWidth;
     private int mChildIndex;
+
     // 分别记录上次滑动的坐标
     private int mLastX = 0;
     private int mLastY = 0;
-
     // 分别记录上次滑动的坐标(onInterceptTouchEvent)
     private int mLastXIntercept = 0;
     private int mLastYIntercept = 0;
@@ -26,85 +26,106 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
     private Scroller mScroller;
     private VelocityTracker mVelocityTracker;
 
-    public HorizontalScrollViewEx2(Context context) {
+    public HorizontalScrollViewEx(Context context) {
         super(context);
         init();
     }
 
-    public HorizontalScrollViewEx2(Context context, AttributeSet attrs) {
+    public HorizontalScrollViewEx(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public HorizontalScrollViewEx2(Context context, AttributeSet attrs,
-            int defStyle) {
+    public HorizontalScrollViewEx(Context context, AttributeSet attrs,
+                                  int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
     private void init() {
-        mScroller = new Scroller(getContext());
-        mVelocityTracker = VelocityTracker.obtain();
+        if (mScroller == null) {
+            mScroller = new Scroller(getContext());
+            mVelocityTracker = VelocityTracker.obtain();
+        }
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+        boolean intercepted = false;
         int x = (int) event.getX();
         int y = (int) event.getY();
-        int action = event.getAction();
-        if (action == MotionEvent.ACTION_DOWN) {
-            mLastX = x;
-            mLastY = y;
-            if (!mScroller.isFinished()) {
-                mScroller.abortAnimation();
-                return true;
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                intercepted = false;
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
+                    intercepted = true;
+                }
+                break;
             }
-            return false;
-        } else {
-            return true;
+            case MotionEvent.ACTION_MOVE: {
+                int deltaX = x - mLastXIntercept;
+                int deltaY = y - mLastYIntercept;
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    intercepted = true;
+                } else {
+                    intercepted = false;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                intercepted = false;
+                break;
+            }
+            default:
+                break;
         }
+
+        Log.d(TAG, "intercepted=" + intercepted);
+        mLastX = x;
+        mLastY = y;
+        mLastXIntercept = x;
+        mLastYIntercept = y;
+
+        return intercepted;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "onTouchEvent action:" + event.getAction());
         mVelocityTracker.addMovement(event);
         int x = (int) event.getX();
         int y = (int) event.getY();
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN: {
-            if (!mScroller.isFinished()) {
-                mScroller.abortAnimation();
+            case MotionEvent.ACTION_DOWN: {
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
+                }
+                break;
             }
-            break;
-        }
-        case MotionEvent.ACTION_MOVE: {
-            int deltaX = x - mLastX;
-            int deltaY = y - mLastY;
-            Log.d(TAG, "move, deltaX:" + deltaX + " deltaY:" + deltaY);
-            scrollBy(-deltaX, 0);
-            break;
-        }
-        case MotionEvent.ACTION_UP: {
-            int scrollX = getScrollX();
-            int scrollToChildIndex = scrollX / mChildWidth;
-            Log.d(TAG, "current index:" + scrollToChildIndex);
-            mVelocityTracker.computeCurrentVelocity(1000);
-            float xVelocity = mVelocityTracker.getXVelocity();
-            if (Math.abs(xVelocity) >= 50) {
-                mChildIndex = xVelocity > 0 ? mChildIndex - 1 : mChildIndex + 1;
-            } else {
-                mChildIndex = (scrollX + mChildWidth / 2) / mChildWidth;
+            case MotionEvent.ACTION_MOVE: {
+                int deltaX = x - mLastX;
+                int deltaY = y - mLastY;
+                scrollBy(-deltaX, 0);
+                break;
             }
-            mChildIndex = Math.max(0, Math.min(mChildIndex, mChildrenSize - 1));
-            int dx = mChildIndex * mChildWidth - scrollX;
-            smoothScrollBy(dx, 0);
-            mVelocityTracker.clear();
-            Log.d(TAG, "index:" + scrollToChildIndex + " dx:" + dx);
-            break;
-        }
-        default:
-            break;
+            case MotionEvent.ACTION_UP: {
+                int scrollX = getScrollX();
+                mVelocityTracker.computeCurrentVelocity(1000);
+                float xVelocity = mVelocityTracker.getXVelocity();
+                if (Math.abs(xVelocity) >= 50) {
+                    mChildIndex = xVelocity > 0 ? mChildIndex - 1 : mChildIndex + 1;
+                } else {
+                    mChildIndex = (scrollX + mChildWidth / 2) / mChildWidth;
+                }
+                mChildIndex = Math.max(0, Math.min(mChildIndex, mChildrenSize - 1));
+                int dx = mChildIndex * mChildWidth - scrollX;
+                smoothScrollBy(dx, 0);
+                mVelocityTracker.clear();
+                break;
+            }
+            default:
+                break;
         }
 
         mLastX = x;
@@ -126,6 +147,11 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         if (childCount == 0) {
             setMeasuredDimension(0, 0);
+        } else if (widthSpecMode == MeasureSpec.AT_MOST && heightSpecMode == MeasureSpec.AT_MOST) {
+            final View childView = getChildAt(0);
+            measuredWidth = childView.getMeasuredWidth() * childCount;
+            measuredHeight = childView.getMeasuredHeight();
+            setMeasuredDimension(measuredWidth, measuredHeight);
         } else if (heightSpecMode == MeasureSpec.AT_MOST) {
             final View childView = getChildAt(0);
             measuredHeight = childView.getMeasuredHeight();
@@ -134,17 +160,11 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
             final View childView = getChildAt(0);
             measuredWidth = childView.getMeasuredWidth() * childCount;
             setMeasuredDimension(measuredWidth, heightSpaceSize);
-        } else {
-            final View childView = getChildAt(0);
-            measuredWidth = childView.getMeasuredWidth() * childCount;
-            measuredHeight = childView.getMeasuredHeight();
-            setMeasuredDimension(measuredWidth, measuredHeight);
         }
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.d(TAG, "width:" + getWidth());
         int childLeft = 0;
         final int childCount = getChildCount();
         mChildrenSize = childCount;
