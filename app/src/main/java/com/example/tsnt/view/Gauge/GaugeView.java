@@ -5,14 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Scroller;
-import android.widget.TextView;
 
 /**
  * Created by ting说你跳 on 2017/6/15.
@@ -28,12 +25,18 @@ public class GaugeView extends ViewGroup {
     private int mLastInterceptedY;
     private int mLastX;
     private int mLastY;
-
-    private Scroller mScroller;
-    private VelocityTracker mVelocityTracker;
     private int mMaxX;
     private int mStart;
     private int mGap;
+    private int mLastScrollX;
+    private int mLastLocation;
+    private boolean canScrollToNearstLocation;
+
+    private Scroller mScroller;
+    private VelocityTracker mVelocityTracker;
+
+    private OnGaugeScrollChangeListener mOnGaugeScrollChangeListener;
+
 
     public GaugeView(Context context) {
         super(context);
@@ -52,10 +55,10 @@ public class GaugeView extends ViewGroup {
 
     public void init() {
         mStart = 200;
-        int end = 1000;
+        int end = 2000;
         mGap = 5;
         mDistance = 40;
-        mCountOfLines = (end - mStart) / mGap + 1;
+        mCountOfLines = (end - mStart) * mGap / 100 + 1;
         mMaxX = (mCountOfLines - 1) * mDistance;
 
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
@@ -69,22 +72,49 @@ public class GaugeView extends ViewGroup {
 //        addGaugeText();
     }
 
-    //添加刻度线文字
-    private void addGaugeText() {
+    interface OnGaugeScrollChangeListener {
+        void onGaugeScrollChange(int currentLocation);
+    }
+
+    public void setOnGaugeScrollChangeListener(OnGaugeScrollChangeListener onGaugeScrollChangeListener) {
+        mOnGaugeScrollChangeListener = onGaugeScrollChangeListener;
+    }
+
+/*    private void addGaugeText() {
         for (int i = 0; i < mCountOfLines; i++) {
             TextView textView = new TextView(getContext());
             textView.setBackgroundColor(Color.parseColor("#000000"));
             textView.setTextColor(Color.parseColor("#000000"));
             textView.setText("111");
             addView(textView);
-            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-            addView(textView,params);
+            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            addView(textView, params);
         }
-    }
+    }*/
 
     private void smoothScrollBy(int deltaX) {
         mScroller.startScroll(getScrollX(), 0, deltaX, 0, 1000);
         invalidate();
+    }
+
+    private void scrollToNearstLocation() {
+        if (canScrollToNearstLocation) {
+            canScrollToNearstLocation = false;
+            int goalLocation = 200 + (getScrollX() + mDistance / 2) / mDistance * (100 / mGap);
+            int goalX = (goalLocation - 200) / (100 / mGap) * mDistance;
+            scrollTo(goalX, 0);
+        }
+    }
+
+
+    private void computeLocation() {
+        int currentLocation = mStart + getScrollX() / mDistance * (100 / mGap);
+        if (currentLocation != mLastLocation) {
+            mLastLocation = currentLocation;
+            if (mOnGaugeScrollChangeListener != null) {
+                mOnGaugeScrollChangeListener.onGaugeScrollChange(currentLocation);
+            }
+        }
     }
 
     @Override
@@ -110,9 +140,16 @@ public class GaugeView extends ViewGroup {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#000000"));
-        //刻度线的数组
+
+        Paint linePaint = new Paint();
+        linePaint.setStrokeWidth(1);
+        linePaint.setColor(Color.parseColor("#666666"));
+
+        Paint textPaint = new Paint();
+        textPaint.setTextSize(42);
+        textPaint.setStrokeWidth(1);
+        linePaint.setColor(Color.parseColor("#000000"));
+
         float[] pts = new float[mCountOfLines * 4];
         for (int i = 0; i < mCountOfLines; i++) {
             pts[i * 4] = mScreenWidth / 2 + mDistance * i;
@@ -120,11 +157,18 @@ public class GaugeView extends ViewGroup {
             pts[i * 4 + 2] = mScreenWidth / 2 + mDistance * i;
             if (i % 5 == 0) {
                 pts[i * 4 + 3] = 125;
+                if (mStart + i * mDistance < 1000) {
+                    canvas.drawText(mStart + 20 * i + "", mScreenWidth / 2 + mDistance * i - 35, 100, textPaint);
+                } else if (mStart + i * mDistance < 10000) {
+                    canvas.drawText(mStart + 20 * i + "", mScreenWidth / 2 + mDistance * i - 50, 100, textPaint);
+                } else {
+                    canvas.drawText(mStart + 20 * i + "", mScreenWidth / 2 + mDistance * i - 65, 100, textPaint);
+                }
             } else {
                 pts[i * 4 + 3] = 150;
             }
         }
-        canvas.drawLines(pts, paint);
+        canvas.drawLines(pts, linePaint);
     }
 
     @Override
@@ -167,13 +211,16 @@ public class GaugeView extends ViewGroup {
                 scrollTo(goalX, 0);
                 break;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
                 mVelocityTracker.computeCurrentVelocity(100, 2000);
                 float xVelocity = mVelocityTracker.getXVelocity();
-                Log.d(TAG, "xVelocity=" + xVelocity);
+                canScrollToNearstLocation = true;
                 if (Math.abs(xVelocity) > 10) {
                     goalX = getScrollX() - (int) xVelocity;
                     goalX = Math.max(0, Math.min(goalX, mMaxX));
                     smoothScrollBy(goalX - getScrollX());
+                } else {
+                    invalidate();
                 }
                 mVelocityTracker.clear();
                 break;
@@ -185,9 +232,13 @@ public class GaugeView extends ViewGroup {
 
     @Override
     public void computeScroll() {
+        computeLocation();
+
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), 0);
             postInvalidate();
+        } else {
+            scrollToNearstLocation();
         }
     }
 
