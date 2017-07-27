@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.tsnt.R;
+import com.gauge.tsnt.gaugeview.GaugeView;
 
 public class GaugeActivity extends AppCompatActivity {
 
@@ -16,8 +17,8 @@ public class GaugeActivity extends AppCompatActivity {
         GaugeView gauge = (GaugeView) findViewById(R.id.gauge);
         gauge.setOnGaugeScrollChangeListener(new GaugeView.OnGaugeScrollChangeListener() {
             @Override
-            public void onGaugeScrollChange(int currentLocation) {
-                location.setText("location=" + currentLocation);
+            public void onGaugeScrollChange(int i) {
+                location.setText("location=" + i);
             }
         });
     }
