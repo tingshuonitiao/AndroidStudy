@@ -18,7 +18,7 @@ import com.example.tsnt.R;
  */
 
 public class Service2Activity extends AppCompatActivity {
-    public static final String TAG = "Service2Activity";
+    public static final String TAG = "service_lifecycle_log";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,12 +27,22 @@ public class Service2Activity extends AppCompatActivity {
         final ServiceConnection conn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.d(TAG, "onServiceConnected");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "Service2Activity#onServiceConnected");
+                    }
+                });
             }
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.d(TAG, "onServiceDisconnected");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "Service2Activity#onServiceDisconnected");
+                    }
+                });
             }
         };
 
