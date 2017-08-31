@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
- * Created by Joinwe on 2017/8/30.
+ * Created by ting说你跳 on 2017/8/30.
  */
 
 public class TestService extends Service {

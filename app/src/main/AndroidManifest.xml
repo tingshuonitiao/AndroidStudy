@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".androidbase.service_lifecycle.ServiceActivity"
+            android:name=".androidbase.intentservice.TestIntentServiceActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,7 @@
         </activity>
 
         <service android:name=".androidbase.service_lifecycle.TestService" />
+        <service android:name=".androidbase.intentservice.MyIntentService" />
 
         <activity
             android:name=".androidbase.service_lifecycle.Service1Activity"
