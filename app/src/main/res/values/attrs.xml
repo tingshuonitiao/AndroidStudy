@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="LimitScrollEditText">
+        <attr name="hint" format="string" />
+        <attr name="maxLength" format="integer" />
+    </declare-styleable>
+</resources>
