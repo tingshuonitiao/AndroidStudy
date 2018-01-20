@@ -1,7 +1,6 @@
-package com.example.tsnt.view.banner;
+package com.example.tsnt.view.Banner;
 
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;

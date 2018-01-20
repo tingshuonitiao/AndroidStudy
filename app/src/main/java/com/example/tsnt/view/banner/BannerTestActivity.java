@@ -1,4 +1,4 @@
-package com.example.tsnt.view.banner;
+package com.example.tsnt.view.Banner;
 
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;

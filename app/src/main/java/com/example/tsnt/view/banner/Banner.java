@@ -1,4 +1,4 @@
-package com.example.tsnt.view.banner;
+package com.example.tsnt.view.Banner;
 
 import android.content.Context;
 import android.os.Message;
