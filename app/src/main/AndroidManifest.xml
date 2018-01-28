@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.AutoFixedLayout.AutoFixedLayoutTestActivity"
+            android:name=".view.MaterialDesign.CoordinatorLayoutTestActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +35,10 @@
         <activity
             android:name=".androidbase.service_lifecycle.Service3Activity"
             android:launchMode="singleInstance" />
+
+        <activity android:name=".view.MaterialDesign.AppBarLayoutTestActivity" />
+        <activity android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity1" />
+        <activity android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity2" />
     </application>
 
 </manifest>
