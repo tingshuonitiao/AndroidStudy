@@ -1,5 +1,7 @@
 package com.example.tsnt.view.Banner;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,5 +61,10 @@ public class BannerTestActivity extends AppCompatActivity {
                         .start();
             }
         });
+    }
+
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, BannerTestActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -1,11 +1,13 @@
 package com.example.tsnt.androidbase.service_lifecycle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.tsnt.R;
+import com.example.tsnt.androidbase.intentservice.TestIntentServiceActivity;
 
 public class ServiceActivity extends AppCompatActivity {
 
@@ -31,5 +33,10 @@ public class ServiceActivity extends AppCompatActivity {
                 startActivity(new Intent(ServiceActivity.this, Service3Activity.class));
             }
         });
+    }
+
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, ServiceActivity.class);
+        context.startActivity(intent);
     }
 }

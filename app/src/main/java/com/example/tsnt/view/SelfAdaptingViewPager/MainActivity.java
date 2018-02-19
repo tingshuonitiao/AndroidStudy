@@ -1,5 +1,7 @@
 package com.example.tsnt.view.SelfAdaptingViewPager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.tsnt.R;
+import com.example.tsnt.view.MaterialDesign.AppBarLayoutTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout             mTabLayout;
+    private TabLayout mTabLayout;
     private SelfAdaptingViewPager mViewpager;
 
     @Override
@@ -55,5 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
     }
 }

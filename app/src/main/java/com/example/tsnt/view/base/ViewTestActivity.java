@@ -2,6 +2,8 @@ package com.example.tsnt.view.base;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,5 +68,10 @@ public class ViewTestActivity extends Activity implements View.OnClickListener {
         Log.d(TAG, "translationY=" + mSlider.getTranslationY());
         Log.d(TAG, "scrollY=" + mSlider.getScrollY());
         Log.d(TAG, "--------------------------------------------");
+    }
+
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, ViewTestActivity.class);
+        context.startActivity(intent);
     }
 }

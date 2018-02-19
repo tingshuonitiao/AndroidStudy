@@ -13,8 +13,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".view.MaterialDesign.CoordinatorLayoutTestActivity"
+            android:name=".homepage.HomePageActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,22 +24,77 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".androidbase.service_lifecycle.TestService" />
+        <!--IntentService-->
         <service android:name=".androidbase.intentservice.MyIntentService" />
 
         <activity
+            android:name=".androidbase.intentservice.TestIntentServiceActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+
+        <!--ServiceLifecycle-->
+        <service android:name=".androidbase.service_lifecycle.TestService" />
+
+        <activity
+            android:name=".androidbase.service_lifecycle.ServiceActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".androidbase.service_lifecycle.Service1Activity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".androidbase.service_lifecycle.Service2Activity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".androidbase.service_lifecycle.Service3Activity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".view.MaterialDesign.AppBarLayoutTestActivity" />
-        <activity android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity1" />
-        <activity android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity2" />
+        <!--MaterialDesign-->
+        <activity
+            android:name=".view.MaterialDesign.CoordinatorLayoutTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MaterialDesign.AppBarLayoutTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity2"
+            android:screenOrientation="portrait" />
+
+        <!--ImageLoader-->
+        <activity
+            android:name=".bitmap.ImageLoader.ImageLoaderActivity"
+            android:screenOrientation="portrait" />
+
+        <!--View-->
+        <activity
+            android:name=".view.AutoFixedLayout.AutoFixedLayoutTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Banner.BannerTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.base.ViewTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.Gauge.GaugeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.HorizontalScollview.Demo1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.HorizontalScollview.Demo2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.LimitScrollEditText.LimitScrollEditTextActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SelfAdaptingViewPager.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
-
 </manifest>

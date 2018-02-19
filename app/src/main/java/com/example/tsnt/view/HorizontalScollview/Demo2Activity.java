@@ -1,5 +1,7 @@
 package com.example.tsnt.view.HorizontalScollview;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +30,7 @@ public class Demo2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_horizontal_scrollview_2);
         Log.d(TAG, "onCreate()");
         initView();
     }
@@ -66,5 +68,10 @@ public class Demo2Activity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, Demo2Activity.class);
+        context.startActivity(intent);
     }
 }

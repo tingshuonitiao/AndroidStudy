@@ -2,19 +2,22 @@ package com.example.tsnt.bitmap.ImageLoader;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AbsListView;
 import android.widget.GridView;
 
 import com.example.tsnt.R;
+import com.example.tsnt.androidbase.service_lifecycle.ServiceActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageLoaderActivity extends Activity implements AbsListView.OnScrollListener {
-    private List<String>    mUrlList;
-    private GridView        mGridView;
+    private List<String> mUrlList;
+    private GridView mGridView;
     private GridViewAdapter mAdapter;
 
     @Override
@@ -97,5 +100,10 @@ public class ImageLoaderActivity extends Activity implements AbsListView.OnScrol
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
+    }
+
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, ImageLoaderActivity.class);
+        context.startActivity(intent);
     }
 }
