@@ -13,7 +13,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".homepage.HomePageActivity"
             android:screenOrientation="portrait">
@@ -24,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <!--IntentService-->
+        <!-- IntentService -->
         <service android:name=".androidbase.intentservice.MyIntentService" />
 
         <activity
@@ -32,7 +31,7 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
-        <!--ServiceLifecycle-->
+        <!-- ServiceLifecycle -->
         <service android:name=".androidbase.service_lifecycle.TestService" />
 
         <activity
@@ -52,7 +51,7 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
-        <!--MaterialDesign-->
+        <!-- MaterialDesign -->
         <activity
             android:name=".view.MaterialDesign.CoordinatorLayoutTestActivity"
             android:screenOrientation="portrait" />
@@ -66,12 +65,12 @@
             android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity2"
             android:screenOrientation="portrait" />
 
-        <!--ImageLoader-->
+        <!-- ImageLoader -->
         <activity
             android:name=".bitmap.ImageLoader.ImageLoaderActivity"
             android:screenOrientation="portrait" />
 
-        <!--View-->
+        <!-- View -->
         <activity
             android:name=".view.AutoFixedLayout.AutoFixedLayoutTestActivity"
             android:screenOrientation="portrait" />
@@ -96,5 +95,9 @@
         <activity
             android:name=".view.SelfAdaptingViewPager.MainActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AutoLineFeedLayout.AutoLineFeedLayoutTestActivity"
+            android:screenOrientation="portrait" />
     </application>
+
 </manifest>

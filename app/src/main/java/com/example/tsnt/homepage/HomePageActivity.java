@@ -11,7 +11,9 @@ import com.example.tsnt.R;
 import com.example.tsnt.androidbase.intentservice.TestIntentServiceActivity;
 import com.example.tsnt.androidbase.service_lifecycle.ServiceActivity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
+import com.example.tsnt.view.AutoFixedLayout.AutoFixedLayout;
 import com.example.tsnt.view.AutoFixedLayout.AutoFixedLayoutTestActivity;
+import com.example.tsnt.view.AutoLineFeedLayout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.Banner.BannerTestActivity;
 import com.example.tsnt.view.Gauge.GaugeActivity;
 import com.example.tsnt.view.HorizontalScollview.Demo1Activity;
@@ -57,6 +59,7 @@ public class HomePageActivity extends AppCompatActivity {
     private List<ModuleEntity> initModuleEntityList() {
         List<ModuleEntity> list = new ArrayList<>();
         list.add(initAutoFixedLayout());
+        list.add(initAutoLineFeedLayout());
         list.add(initBanner());
         list.add(initViewTest());
         list.add(initGauge());
@@ -77,6 +80,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AutoFixedLayoutTestActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initAutoLineFeedLayout() {
+        return new ModuleEntity("AutoLineFeedLayout", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AutoLineFeedLayoutTestActivity.launch(context);
             }
         });
     }
