@@ -98,6 +98,7 @@
         <activity
             android:name=".view.AutoLineFeedLayout.AutoLineFeedLayoutTestActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.gluttonous_snake.GluttonousSnakeActivity"></activity>
     </application>
 
 </manifest>

@@ -21,6 +21,7 @@ import com.example.tsnt.view.HorizontalScollview.Demo2Activity;
 import com.example.tsnt.view.MaterialDesign.AppBarLayoutTestActivity;
 import com.example.tsnt.view.SelfAdaptingViewPager.MainActivity;
 import com.example.tsnt.view.base.ViewTestActivity;
+import com.example.tsnt.view.gluttonous_snake.GluttonousSnakeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initBanner());
         list.add(initViewTest());
         list.add(initGauge());
+        list.add(initGluttonousSnake());
         list.add(initHorizontalScollview1());
         list.add(initHorizontalScollview2());
         list.add(initMaterialDesign());
@@ -116,6 +118,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GaugeActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initGluttonousSnake() {
+        return new ModuleEntity("GluttonousSnake", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GluttonousSnakeActivity.launch(context);
             }
         });
     }
