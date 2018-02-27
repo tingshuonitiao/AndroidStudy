@@ -77,75 +77,7 @@ public class SnakeView extends View {
     // 蛇的速度, 这里指蛇移动一格所需的时间
     private int velocity;
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Log.d(TAG, "handleMessage");
-            if (msg.what == Order.GO) {
-                int oldHeadIndex = paths.getFirst();
-                int newHeadIndex;
-                int currDirection = direction;
-                Log.d(TAG, "food is " + food);
-                switch (currDirection) {
-                    case Direction.UP:
-                        newHeadIndex = oldHeadIndex - columnNum;
-                        // 添加新的蛇头
-                        paths.addFirst(newHeadIndex);
-                        if (newHeadIndex == food) {
-                            // 如果食物被吃, 创建新的食物
-                            createFood();
-                        } else {
-                            // 去除原来的蛇尾
-                            paths.removeLast();
-                        }
-                        break;
-                    case Direction.DOWN:
-                        newHeadIndex = oldHeadIndex + columnNum;
-                        // 添加新的蛇头
-                        paths.addFirst(newHeadIndex);
-                        if (newHeadIndex == food) {
-                            // 如果食物被吃, 创建新的食物
-                            createFood();
-                        } else {
-                            // 去除原来的蛇尾
-                            paths.removeLast();
-                        }
-                        break;
-                    case Direction.LEFT:
-                        newHeadIndex = oldHeadIndex - 1;
-                        // 添加新的蛇头
-                        paths.addFirst(newHeadIndex);
-                        if (newHeadIndex == food) {
-                            // 如果食物被吃, 创建新的食物
-                            createFood();
-                        } else {
-                            // 去除原来的蛇尾
-                            paths.removeLast();
-                        }
-                        break;
-                    case Direction.RIGHT:
-                        newHeadIndex = oldHeadIndex + 1;
-                        // 添加新的蛇头
-                        paths.addFirst(newHeadIndex);
-                        if (newHeadIndex == food) {
-                            // 如果食物被吃, 创建新的食物
-                            createFood();
-                        } else {
-                            // 去除原来的蛇尾
-                            paths.removeLast();
-                        }
-                        break;
-                }
-                // 刷新界面
-                postInvalidate();
-                canChangeDirection = true;
-                sendEmptyMessageDelayed(Order.GO, velocity);
-            } else if (msg.what == Order.STOP) {
-
-            }
-        }
-    };
+    private SnakeViewHandler snakeViewHandler;
 
     public SnakeView(Context context) {
         this(context, null);
@@ -175,8 +107,9 @@ public class SnakeView extends View {
             public void onGlobalLayout() {
                 // 移除监听，因为会多次回调
                 getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                // 开启自动爬行
-                handler.sendEmptyMessageDelayed(Order.GO, velocity);
+                // 初始化Handler
+                snakeViewHandler = new SnakeViewHandler(SnakeView.this);
+                snakeViewHandler.sendEmptyMessageDelayed(Order.GO, velocity);
             }
         });
     }
@@ -263,6 +196,86 @@ public class SnakeView extends View {
         canvas.drawRect(fieldWidth - rightPadding, 0, fieldWidth, fieldHeight, boundaryPaint);
     }
 
+    /**
+     * 根据网格的索引填充网格
+     *
+     * @param canvas 画布
+     * @param paint  画笔
+     * @param index  网格的索引
+     */
+    private void drawCell(Canvas canvas, Paint paint, int index) {
+        // 判断该网格在场地哪一行
+        int row = index / columnNum;
+        // 判断该网格在场地哪一列
+        int column = index - row * columnNum;
+
+        float left = leftPadding + column * bodyWidth;
+        float top = topPadding + row * bodyWidth;
+        float right = left + bodyWidth;
+        float bottom = top + bodyWidth;
+        canvas.drawRect(left, top, right, bottom, paint);
+    }
+
+    // 蛇爬行一步
+    private void goOneStep(int direction) {
+        int oldHeadIndex = paths.getFirst();
+        int newHeadIndex;
+        switch (direction) {
+            case Direction.UP:
+                newHeadIndex = oldHeadIndex - columnNum;
+                // 添加新的蛇头
+                paths.addFirst(newHeadIndex);
+                if (newHeadIndex == food) {
+                    // 如果食物被吃, 创建新的食物
+                    createFood();
+                } else {
+                    // 去除原来的蛇尾
+                    paths.removeLast();
+                }
+                break;
+            case Direction.DOWN:
+                newHeadIndex = oldHeadIndex + columnNum;
+                // 添加新的蛇头
+                paths.addFirst(newHeadIndex);
+                if (newHeadIndex == food) {
+                    // 如果食物被吃, 创建新的食物
+                    createFood();
+                } else {
+                    // 去除原来的蛇尾
+                    paths.removeLast();
+                }
+                break;
+            case Direction.LEFT:
+                newHeadIndex = oldHeadIndex - 1;
+                // 添加新的蛇头
+                paths.addFirst(newHeadIndex);
+                if (newHeadIndex == food) {
+                    // 如果食物被吃, 创建新的食物
+                    createFood();
+                } else {
+                    // 去除原来的蛇尾
+                    paths.removeLast();
+                }
+                break;
+            case Direction.RIGHT:
+                newHeadIndex = oldHeadIndex + 1;
+                // 添加新的蛇头
+                paths.addFirst(newHeadIndex);
+                if (newHeadIndex == food) {
+                    // 如果食物被吃, 创建新的食物
+                    createFood();
+                } else {
+                    // 去除原来的蛇尾
+                    paths.removeLast();
+                }
+                break;
+        }
+        // 刷新界面
+        postInvalidate();
+        canChangeDirection = true;
+        snakeViewHandler.sendEmptyMessageDelayed(Order.GO, velocity);
+    }
+
     // 在随机的位置产生食物
     private void createFood() {
         // 没被蛇身占领的网格格数
@@ -287,24 +300,17 @@ public class SnakeView extends View {
         }
     }
 
-    /**
-     * 根据网格的索引填充网格
-     *
-     * @param canvas 画布
-     * @param paint  画笔
-     * @param index  网格的索引
-     */
-    private void drawCell(Canvas canvas, Paint paint, int index) {
-        // 判断该网格在场地哪一行
-        int row = index / columnNum;
-        // 判断该网格在场地哪一列
-        int column = index - row * columnNum;
+    // 获取蛇的前进方向
+    private int getDirection() {
+        return direction;
+    }
 
-        float left = leftPadding + column * bodyWidth;
-        float top = topPadding + row * bodyWidth;
-        float right = left + bodyWidth;
-        float bottom = top + bodyWidth;
-        canvas.drawRect(left, top, right, bottom, paint);
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        // 释放资源，避免内存泄露
+        snakeViewHandler.detachFromSnakeView();
+        snakeViewHandler = null;
     }
 
     // ---------- 以下为暴露给外部使用的方法 ----------
@@ -341,6 +347,8 @@ public class SnakeView extends View {
         }
     }
 
+    // ---------- 辅助类 ----------
+
     // 指令
     static class Order {
         public static final int GO = 0;
@@ -353,5 +361,33 @@ public class SnakeView extends View {
         public static final int DOWN = 1;
         public static final int LEFT = 2;
         public static final int RIGHT = 3;
+    }
+
+    // 处理循环事件自定义的Handler
+    static class SnakeViewHandler extends Handler {
+
+        private SnakeView snakeView;
+
+        public SnakeViewHandler(SnakeView snakeView) {
+            this.snakeView = snakeView;
+        }
+
+        // 资源回收
+        public void detachFromSnakeView() {
+            snakeView = null;
+            removeCallbacksAndMessages(null);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Log.d(TAG, "handleMessage");
+            if (msg.what == Order.GO) {
+                int direction = snakeView.getDirection();
+                snakeView.goOneStep(direction);
+            } else if (msg.what == Order.STOP) {
+
+            }
+        }
     }
 }
