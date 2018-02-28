@@ -1,4 +1,4 @@
-package com.example.tsnt.view.Banner;
+package com.example.tsnt.view.banner;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

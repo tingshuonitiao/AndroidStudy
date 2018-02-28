@@ -10,7 +10,6 @@ import android.widget.AbsListView;
 import android.widget.GridView;
 
 import com.example.tsnt.R;
-import com.example.tsnt.androidbase.service_lifecycle.ServiceActivity;
 
 import java.util.ArrayList;
 import java.util.List;

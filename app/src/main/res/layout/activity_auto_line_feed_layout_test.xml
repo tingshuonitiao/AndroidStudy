@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.tsnt.view.AutoLineFeedLayout.AutoLineFeedLayout
+    <com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayout
         android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

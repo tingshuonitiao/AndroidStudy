@@ -1,4 +1,4 @@
-package com.example.tsnt.view.Banner;
+package com.example.tsnt.view.banner;
 
 /**
  * Created by zhangxiaozong on 17/12/31.

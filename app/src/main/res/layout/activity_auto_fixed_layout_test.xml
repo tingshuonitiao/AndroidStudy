@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.tsnt.view.AutoFixedLayout.AutoFixedLayout
+    <com.example.tsnt.view.auto_fixed_layout.AutoFixedLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="100dp"
@@ -36,7 +36,7 @@
                 android:background="@android:color/holo_red_light" />
         </LinearLayout>
 
-    </com.example.tsnt.view.AutoFixedLayout.AutoFixedLayout>
+    </com.example.tsnt.view.auto_fixed_layout.AutoFixedLayout>
 
     <Button
         android:id="@+id/minus"

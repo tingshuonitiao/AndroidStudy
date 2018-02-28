@@ -12,7 +12,7 @@
         android:layout_marginTop="5dp"
         android:text="TextView" />
 
-    <com.example.tsnt.view.HorizontalScollview.MyListView
+    <com.example.tsnt.view.horizontal_scollview.MyListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

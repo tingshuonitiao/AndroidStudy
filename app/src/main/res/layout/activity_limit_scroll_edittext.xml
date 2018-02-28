@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.tsnt.view.LimitScrollEditText.LimitScrollEditText
+    <com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditText
         android:id="@+id/limitScrollEditText"
         android:layout_width="match_parent"
         android:layout_height="100dp"

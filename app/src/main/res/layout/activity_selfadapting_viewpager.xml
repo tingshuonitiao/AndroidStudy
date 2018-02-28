@@ -32,7 +32,7 @@
                 app:tabSelectedTextColor="@android:color/holo_green_light"
                 app:tabTextColor="@android:color/darker_gray"/>
 
-            <com.example.tsnt.view.SelfAdaptingViewPager.SelfAdaptingViewPager
+            <com.example.tsnt.view.self_adapting_view_pager.SelfAdaptingViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

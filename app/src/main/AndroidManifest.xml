@@ -24,45 +24,45 @@
         </activity>
 
         <!-- IntentService -->
-        <service android:name=".androidbase.intentservice.MyIntentService" />
+        <service android:name=".android_base.intentservice.MyIntentService" />
 
         <activity
-            android:name=".androidbase.intentservice.TestIntentServiceActivity"
+            android:name=".android_base.intentservice.TestIntentServiceActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
         <!-- ServiceLifecycle -->
-        <service android:name=".androidbase.service_lifecycle.TestService" />
+        <service android:name=".android_base.service_lifecycle.TestService" />
 
         <activity
-            android:name=".androidbase.service_lifecycle.ServiceActivity"
+            android:name=".android_base.service_lifecycle.ServiceActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".androidbase.service_lifecycle.Service1Activity"
+            android:name=".android_base.service_lifecycle.Service1Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".androidbase.service_lifecycle.Service2Activity"
+            android:name=".android_base.service_lifecycle.Service2Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".androidbase.service_lifecycle.Service3Activity"
+            android:name=".android_base.service_lifecycle.Service3Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
         <!-- MaterialDesign -->
         <activity
-            android:name=".view.MaterialDesign.CoordinatorLayoutTestActivity"
+            android:name=".view.material_design.CoordinatorLayoutTestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.MaterialDesign.AppBarLayoutTestActivity"
+            android:name=".view.material_design.AppBarLayoutTestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity1"
+            android:name=".view.material_design.CollapsingToolbarLayoutTestActivity1"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.MaterialDesign.CollapsingToolbarLayoutTestActivity2"
+            android:name=".view.material_design.CollapsingToolbarLayoutTestActivity2"
             android:screenOrientation="portrait" />
 
         <!-- ImageLoader -->
@@ -72,31 +72,31 @@
 
         <!-- View -->
         <activity
-            android:name=".view.AutoFixedLayout.AutoFixedLayoutTestActivity"
+            android:name=".view.auto_fixed_layout.AutoFixedLayoutTestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.Banner.BannerTestActivity"
+            android:name=".view.banner.BannerTestActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.base.ViewTestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.Gauge.GaugeActivity"
+            android:name=".view.gauge.GaugeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.HorizontalScollview.Demo1Activity"
+            android:name=".view.horizontal_scollview.Demo1Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.HorizontalScollview.Demo2Activity"
+            android:name=".view.horizontal_scollview.Demo2Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.LimitScrollEditText.LimitScrollEditTextActivity"
+            android:name=".view.limit_scroll_edittext.LimitScrollEditTextActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.SelfAdaptingViewPager.MainActivity"
+            android:name=".view.self_adapting_view_pager.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.AutoLineFeedLayout.AutoLineFeedLayoutTestActivity"
+            android:name=".view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.gluttonous_snake.GluttonousSnakeActivity"></activity>
     </application>
