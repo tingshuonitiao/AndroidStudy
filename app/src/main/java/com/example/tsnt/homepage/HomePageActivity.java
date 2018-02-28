@@ -18,6 +18,8 @@ import com.example.tsnt.view.Banner.BannerTestActivity;
 import com.example.tsnt.view.Gauge.GaugeActivity;
 import com.example.tsnt.view.HorizontalScollview.Demo1Activity;
 import com.example.tsnt.view.HorizontalScollview.Demo2Activity;
+import com.example.tsnt.view.LimitScrollEditText.LimitScrollEditText;
+import com.example.tsnt.view.LimitScrollEditText.LimitScrollEditTextActivity;
 import com.example.tsnt.view.MaterialDesign.AppBarLayoutTestActivity;
 import com.example.tsnt.view.SelfAdaptingViewPager.MainActivity;
 import com.example.tsnt.view.base.ViewTestActivity;
@@ -67,6 +69,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initGluttonousSnake());
         list.add(initHorizontalScollview1());
         list.add(initHorizontalScollview2());
+        list.add(initLimitScrollEditText());
         list.add(initMaterialDesign());
         list.add(initSelfAdaptingViewPager());
         list.add(initIntentServicetTest());
@@ -145,6 +148,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Demo2Activity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initLimitScrollEditText() {
+        return new ModuleEntity("LimitScrollEditText", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LimitScrollEditTextActivity.launch(context);
             }
         });
     }

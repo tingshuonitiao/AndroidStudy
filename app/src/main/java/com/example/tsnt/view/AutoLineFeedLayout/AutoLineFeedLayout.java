@@ -18,7 +18,7 @@ import java.util.List;
 
 public class AutoLineFeedLayout extends ViewGroup {
 
-    // 属性
+    // 借用了系统的属性
     private static final int[] LAYOUT_ATTRS = {
             android.R.attr.horizontalSpacing,
             android.R.attr.verticalSpacing,
@@ -49,6 +49,7 @@ public class AutoLineFeedLayout extends ViewGroup {
         initView(context, attrs);
     }
 
+    @SuppressWarnings("ResourceType")
     private void initView(Context context, AttributeSet attrs) {
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, LAYOUT_ATTRS);

@@ -31,7 +31,7 @@ public class SnakeView extends View {
 
     // 是否初始化
     private boolean isInitial = false;
-    // 是否可以改变方向, 每走一步之后可以改变一次方向
+    // 是否可以改变方向, 每走一步之后可以改变一次方向, 避免连续多次改变方向
     private boolean canChangeDirection = false;
 
     // 安全区域的宽度
@@ -56,7 +56,7 @@ public class SnakeView extends View {
     // 边界的颜色
     private static final int BOUNDARY_COLOR = Color.RED;
 
-    // 蛇所处的路径, 其中存储的元素代表网格的索引(按从左到右，从上到下排序所得)
+    // 蛇所处的路径, 其中存储的元素代表网格的索引(按从左到右, 从上到下排序所得)
     private LinkedList<Integer> paths;
     // 蛇身的宽度
     private int bodyWidth;
@@ -65,9 +65,9 @@ public class SnakeView extends View {
     // 蛇的颜色
     private static final int SNAKE_COLOR = Color.GREEN;
     // 蛇前进的方向
-    private int direction = Direction.RIGHT;
+    private int direction;
 
-    // 食物所处的位置, 代表网格的索引(按从左到右，从上到下排序所得)
+    // 食物所处的位置, 代表网格的索引(按从左到右, 从上到下排序所得)
     private int food;
     // 食物的画笔
     private Paint foodPaint;
@@ -78,6 +78,8 @@ public class SnakeView extends View {
     private int velocity;
 
     private SnakeViewHandler snakeViewHandler;
+
+    private SnakeViewStateChangeListener snakeViewStateChangeListener;
 
     public SnakeView(Context context) {
         this(context, null);
@@ -96,7 +98,7 @@ public class SnakeView extends View {
     private void initView() {
         initPaint();
         // 蛇移动的速度
-        velocity = 500;
+        velocity = 200;
         // 设置蛇身宽度
         bodyWidth = DisplayUtil.dp2px(context, 20);
         // 初始化蛇身路径
@@ -105,7 +107,7 @@ public class SnakeView extends View {
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                // 移除监听，因为会多次回调
+                // 移除监听, 因为会多次回调
                 getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 // 初始化Handler
                 snakeViewHandler = new SnakeViewHandler(SnakeView.this);
@@ -135,15 +137,8 @@ public class SnakeView extends View {
         if (!isInitial) {
             isInitial = true;
             divideField();
-            // 设置初始时蛇身的路径
-            int row = rowNum / 2;
-            int column = columnNum / 2;
-            for (int i = 0; i < 3; i++) {
-                int index = row * columnNum + column - 3 + i;
-                paths.addFirst(index);
-            }
-            // 设置初始时食物位置
-            food = 2 * columnNum + 1;
+            initSnake();
+            initFood();
         }
         setMeasuredDimension(MeasureSpec.makeMeasureSpec(fieldWidth, MeasureSpec.EXACTLY)
                 , MeasureSpec.makeMeasureSpec(fieldHeight, MeasureSpec.EXACTLY));
@@ -151,7 +146,7 @@ public class SnakeView extends View {
 
     // 划分场地
     private void divideField() {
-        // 以一个边长为蛇身宽度的正方形为一个单位，得到 rowNum * columnNum 个网格
+        // 以一个边长为蛇身宽度的正方形为一个单位, 得到 rowNum * columnNum 个网格
         rowNum = fieldHeight / bodyWidth;
         columnNum = fieldWidth / bodyWidth;
         topPadding = (fieldHeight - rowNum * bodyWidth) / 2;
@@ -169,6 +164,28 @@ public class SnakeView extends View {
             leftPadding = bodyWidth;
             rightPadding = bodyWidth;
         }
+    }
+
+    // 初始化蛇身
+    private void initSnake() {
+        int row = rowNum / 2;
+        int column = columnNum / 2;
+        paths.clear();
+        for (int i = 0; i < 3; i++) {
+            int index = row * columnNum + column - 3 + i;
+            paths.addFirst(index);
+        }
+        initDirection();
+    }
+
+    // 初始化蛇前进的方向
+    private void initDirection() {
+        direction = Direction.RIGHT;
+    }
+
+    // 初始化食物
+    private void initFood() {
+        food = 2 * columnNum + 1;
     }
 
     @Override
@@ -205,10 +222,10 @@ public class SnakeView extends View {
      */
     private void drawCell(Canvas canvas, Paint paint, int index) {
         // 判断该网格在场地哪一行
-        int row = index / columnNum;
+        int row = getRowIndex(index);
         // 判断该网格在场地哪一列
-        int column = index - row * columnNum;
-
+        int column = getColumnIndex(index);
+        Log.d(TAG, "row = " + row + ", column = " + column);
         float left = leftPadding + column * bodyWidth;
         float top = topPadding + row * bodyWidth;
         float right = left + bodyWidth;
@@ -220,60 +237,68 @@ public class SnakeView extends View {
     private void goOneStep(int direction) {
         int oldHeadIndex = paths.getFirst();
         int newHeadIndex;
+        newHeadIndex = getNewHead(direction, oldHeadIndex);
+        if (checkSafety(newHeadIndex, oldHeadIndex, direction)) {
+            // 前方无障碍, 前进一格
+            // 添加新的蛇头
+            paths.addFirst(newHeadIndex);
+            Log.d(TAG, "newHeadIndex = " + newHeadIndex);
+            Log.d(TAG, "food = " + food);
+            if (newHeadIndex == food) {
+                // 如果食物被吃, 创建新的食物
+                createFood();
+            } else {
+                // 去除原来的蛇尾
+                paths.removeLast();
+            }
+            // 刷新界面
+            postInvalidate();
+            canChangeDirection = true;
+            snakeViewHandler.sendEmptyMessageDelayed(Order.GO, velocity);
+        } else {
+            if (snakeViewStateChangeListener != null) {
+                snakeViewStateChangeListener.onStop();
+            }
+        }
+    }
+
+    // 获取新的蛇头
+    private int getNewHead(int direction, int oldHeadIndex) {
+        int newHeadIndex;
         switch (direction) {
             case Direction.UP:
                 newHeadIndex = oldHeadIndex - columnNum;
-                // 添加新的蛇头
-                paths.addFirst(newHeadIndex);
-                if (newHeadIndex == food) {
-                    // 如果食物被吃, 创建新的食物
-                    createFood();
-                } else {
-                    // 去除原来的蛇尾
-                    paths.removeLast();
-                }
                 break;
             case Direction.DOWN:
                 newHeadIndex = oldHeadIndex + columnNum;
-                // 添加新的蛇头
-                paths.addFirst(newHeadIndex);
-                if (newHeadIndex == food) {
-                    // 如果食物被吃, 创建新的食物
-                    createFood();
-                } else {
-                    // 去除原来的蛇尾
-                    paths.removeLast();
-                }
                 break;
             case Direction.LEFT:
                 newHeadIndex = oldHeadIndex - 1;
-                // 添加新的蛇头
-                paths.addFirst(newHeadIndex);
-                if (newHeadIndex == food) {
-                    // 如果食物被吃, 创建新的食物
-                    createFood();
-                } else {
-                    // 去除原来的蛇尾
-                    paths.removeLast();
-                }
                 break;
             case Direction.RIGHT:
                 newHeadIndex = oldHeadIndex + 1;
-                // 添加新的蛇头
-                paths.addFirst(newHeadIndex);
-                if (newHeadIndex == food) {
-                    // 如果食物被吃, 创建新的食物
-                    createFood();
-                } else {
-                    // 去除原来的蛇尾
-                    paths.removeLast();
-                }
                 break;
+            default:
+                newHeadIndex = oldHeadIndex;
         }
-        // 刷新界面
-        postInvalidate();
-        canChangeDirection = true;
-        snakeViewHandler.sendEmptyMessageDelayed(Order.GO, velocity);
+        return newHeadIndex;
+    }
+
+    // 检查蛇是否撞墙或者碰撞自身
+    private boolean checkSafety(int newHeadIndex, int oldHeadIndex, int direction) {
+        int rowIndex = getRowIndex(oldHeadIndex);
+        int columnIndex = getColumnIndex(oldHeadIndex);
+        if ((columnIndex == 0 && direction == Direction.LEFT)
+                || ((columnIndex == columnNum - 1 && direction == Direction.RIGHT))
+                || ((rowIndex == 0 && direction == Direction.UP))
+                || ((rowIndex == rowNum - 1 && direction == Direction.DOWN))) {
+            return false;
+        }
+        if (paths.contains(newHeadIndex)) {
+            // 如果碰撞自身
+            return false;
+        }
+        return true;
     }
 
     // 在随机的位置产生食物
@@ -291,10 +316,10 @@ public class SnakeView extends View {
                     count++;
                 }
                 if (count == indexOfFood) {
-                    // 找到随机的索引所在位置，在currIndex处产生食物
+                    // 找到随机的索引所在位置, 在realIndex处产生食物
                     food = realIndex;
-                    Log.d(TAG, "index of food is " + food);
-                    break;
+                    Log.d(TAG, "create food at " + food);
+                    return;
                 }
             }
         }
@@ -305,10 +330,21 @@ public class SnakeView extends View {
         return direction;
     }
 
+    // 根据Index计算在哪一行
+    private int getRowIndex(int index) {
+        return index / columnNum;
+    }
+
+    // 根据Index计算在哪一列
+    private int getColumnIndex(int index) {
+        int rowIndex = getRowIndex(index);
+        return index - rowIndex * columnNum;
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        // 释放资源，避免内存泄露
+        // 释放资源, 避免内存泄露
         snakeViewHandler.detachFromSnakeView();
         snakeViewHandler = null;
     }
@@ -345,6 +381,28 @@ public class SnakeView extends View {
             canChangeDirection = false;
             direction = Direction.RIGHT;
         }
+    }
+
+    // 重新开始
+    public void restart() {
+        // 重新设置蛇身
+        initSnake();
+        // 重新设置食物
+        initFood();
+        snakeViewHandler.sendEmptyMessageDelayed(Order.GO, velocity);
+    }
+
+    // 设置SnakeView状态变化的监听器
+    public void setSnakeViewStateChangeListener(SnakeViewStateChangeListener snakeViewStateChangeListener) {
+        this.snakeViewStateChangeListener = snakeViewStateChangeListener;
+    }
+
+    // ---------- 以下为暴露给外部使用的接口 ----------
+
+    // SnakeView状态变化的监听器
+    interface SnakeViewStateChangeListener {
+        // 停止
+        void onStop();
     }
 
     // ---------- 辅助类 ----------
