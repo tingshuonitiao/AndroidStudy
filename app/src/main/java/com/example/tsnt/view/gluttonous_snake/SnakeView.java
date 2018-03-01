@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-02-23 20:37
  * @Description: Gluttonous Snake
  */

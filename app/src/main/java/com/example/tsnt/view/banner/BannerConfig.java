@@ -1,7 +1,7 @@
 package com.example.tsnt.view.banner;
 
 /**
- * Created by zhangxiaozong on 17/12/31.
+ * Created by tingshuonitiao on 17/12/31.
  */
 
 public class BannerConfig {

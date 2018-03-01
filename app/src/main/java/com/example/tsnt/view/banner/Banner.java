@@ -20,7 +20,7 @@ import java.util.List;
 import static android.support.v4.view.ViewPager.SCROLL_STATE_IDLE;
 
 /**
- * Created by zhangxiaozong on 17/12/24.
+ * Created by tingshuonitiao on 17/12/24.
  */
 
 public class Banner extends FrameLayout implements ViewPager.OnPageChangeListener {

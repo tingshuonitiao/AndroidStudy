@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 /**
- * Created by zhangxiaozong on 18/1/20.
+ * Created by tingshuonitiao on 18/1/20.
  */
 
 public class AutoFixedLayout extends LinearLayout {

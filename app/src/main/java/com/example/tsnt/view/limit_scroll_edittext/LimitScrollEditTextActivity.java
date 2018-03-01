@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import com.example.tsnt.R;
 
 /**
- * Created by zhangxiaozong on 17/12/16.
+ * Created by tingshuonitiao on 17/12/16.
  */
 
 public class LimitScrollEditTextActivity extends Activity {

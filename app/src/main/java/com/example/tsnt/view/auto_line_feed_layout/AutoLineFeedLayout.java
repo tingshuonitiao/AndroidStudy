@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-01-28 21:54
  * @Description: 自动换行的布局
  */

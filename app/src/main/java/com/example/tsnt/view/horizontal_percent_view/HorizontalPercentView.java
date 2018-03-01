@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-02-28 16:25
  * @Description: 横向百分比布局
  */
