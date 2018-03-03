@@ -104,6 +104,9 @@
         <activity
             android:name=".view.horizontal_percent_view.HorizontalPercentViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.generate_poster.GeneratePosterActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

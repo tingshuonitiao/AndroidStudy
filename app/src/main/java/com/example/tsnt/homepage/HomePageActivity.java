@@ -15,6 +15,7 @@ import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
 import com.example.tsnt.view.gauge.GaugeActivity;
+import com.example.tsnt.view.generate_poster.GeneratePosterActivity;
 import com.example.tsnt.view.horizontal_percent_view.HorizontalPercentViewActivity;
 import com.example.tsnt.view.horizontal_scollview.Demo1Activity;
 import com.example.tsnt.view.horizontal_scollview.Demo2Activity;
@@ -65,6 +66,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initBanner());
         list.add(initViewTest());
         list.add(initGauge());
+        list.add(initGeneratePoster());
         list.add(initGluttonousSnake());
         list.add(initHorizontalPercentView());
         list.add(initHorizontalScollview1());
@@ -121,6 +123,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GaugeActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initGeneratePoster() {
+        return new ModuleEntity("GeneratePoster", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneratePosterActivity.launch(context);
             }
         });
     }

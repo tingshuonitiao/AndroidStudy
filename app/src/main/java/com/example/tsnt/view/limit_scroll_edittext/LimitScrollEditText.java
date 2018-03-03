@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.tsnt.R;
 
 /**
- * Created by ting说你挑 on 17/12/16.
+ * Created by tingshuonitiao on 17/12/16.
  * <p>
  * 限制字数, 并且实时显示字数的EditText
  */
