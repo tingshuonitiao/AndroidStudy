@@ -27,6 +27,12 @@ import static android.text.style.DynamicDrawableSpan.ALIGN_BASELINE;
  * @Author: tingshuonitiao
  * @Date: 2018-02-23 20:37
  * @Description: 生成一张海报
+ * <p>
+ * <p>
+ * 问题: 如果一个不添加到屏幕上的View的最外层布局为LinearLayout, 有一个ImageView为LinearLayout的直接子View,
+ * 我们给ImageView指定了高度, 但是ImageView的实际高度不等于给它指定的高度。
+ * <p>
+ * 解决问题的方法: 在ImageView外再包裹一层布局
  */
 
 public class GeneratePosterActivity extends AppCompatActivity {
@@ -69,7 +75,8 @@ public class GeneratePosterActivity extends AppCompatActivity {
     // 生成海报
     private void generatePoster() {
         // 创建海报的View
-        final View view = View.inflate(this, R.layout.layout_generate_view, null);
+        final View view = View.inflate(this, R.layout.layout_generate_view_relativelayout, null);
+//        final View view = View.inflate(this, R.layout.layout_generate_view_linearlayout, null);
         // 设置海报中的文字
         TextView content = (TextView) view.findViewById(R.id.content);
         formatText(content);

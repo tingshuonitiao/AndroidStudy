@@ -4,26 +4,12 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/top_view"
         android:layout_width="match_parent"
-        android:layout_height="280dp">
-
-        <!--如果图片像素比较小，填充View的时候，图片本身的高度会使用实际的高度-->
-        <!--这里包裹一层，避免这种情况的发生-->
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:background="@android:color/white" />
-
-        <ImageView
-            android:id="@+id/top_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="false"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher" />
-    </FrameLayout>
+        android:layout_height="280dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
