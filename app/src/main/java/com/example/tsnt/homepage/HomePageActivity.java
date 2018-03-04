@@ -14,6 +14,7 @@ import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
+import com.example.tsnt.view.circle_imageview.CircleImageViewTestActivity;
 import com.example.tsnt.view.gauge.GaugeActivity;
 import com.example.tsnt.view.generate_poster.GeneratePosterActivity;
 import com.example.tsnt.view.horizontal_percent_view.HorizontalPercentViewActivity;
@@ -65,6 +66,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initAutoLineFeedLayout());
         list.add(initBanner());
         list.add(initViewTest());
+        list.add(initCircleImageView());
         list.add(initGauge());
         list.add(initGeneratePoster());
         list.add(initGluttonousSnake());
@@ -114,6 +116,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ViewTestActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initCircleImageView() {
+        return new ModuleEntity("CircleImageView", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CircleImageViewTestActivity.launch(context);
             }
         });
     }
