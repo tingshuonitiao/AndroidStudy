@@ -42,7 +42,7 @@ public class AutoLineFeedLayoutTestActivity extends AppCompatActivity {
         stringlist.add("ArrayList");
         stringlist.add("第一次");
         stringlist.add("今宵难忘");
-        stringlist.add("icon_kobe bryant");
+        stringlist.add("kobe bryant");
         stringlist.add("今天天不好,刚才冒着雨上山烧香,现在全湿了.");
         stringlist.add("hehehehehehehehehehehehehehehehehe");
 
