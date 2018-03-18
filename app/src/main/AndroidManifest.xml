@@ -107,7 +107,14 @@
         <activity
             android:name=".view.generate_poster.GeneratePosterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.circle_imageview.CircleImageViewTestActivity"></activity>
+        <activity
+            android:name=".view.circle_imageview.CircleImageViewTestActivity"
+            android:screenOrientation="portrait" />
+
+        <!--databinding-->
+        <activity
+            android:name=".mvvm.TestActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

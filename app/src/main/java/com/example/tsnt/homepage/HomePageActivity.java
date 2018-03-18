@@ -11,6 +11,7 @@ import com.example.tsnt.R;
 import com.example.tsnt.android_base.intentservice.TestIntentServiceActivity;
 import com.example.tsnt.android_base.service_lifecycle.ServiceActivity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
+import com.example.tsnt.mvvm.TestActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
@@ -79,6 +80,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initIntentServicetTest());
         list.add(initServiceLifecyle());
         list.add(initImageLoader());
+        list.add(initMVVM());
         return list;
     }
 
@@ -237,6 +239,17 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ImageLoaderActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化MVVM模块 ----------
+
+    private ModuleEntity initMVVM() {
+        return new ModuleEntity("MVVM", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TestActivity.launch(context);
             }
         });
     }
