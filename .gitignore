@@ -6,3 +6,5 @@
 /build
 /captures
 pullToRefresh/build
+buildSrc/.gradle
+buildSrc/build

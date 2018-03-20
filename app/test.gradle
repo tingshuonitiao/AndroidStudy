@@ -1,0 +1,20 @@
+class HiTask extends DefaultTask {
+    // @Optional 表示在配置该Task时，message是可选的。
+    @Optional
+    String message = 'I am kaku'
+    // @TaskAction 表示该Task要执行的动作,即在调用该Task时，hello()方法将被执行
+    @TaskAction
+    def hello() {
+        println "Hi, $message"
+    }
+}
+
+task hi(type: HiTask)
+
+task hiToAndroid(type: HiTask) {
+    message = "I am Android OS"
+}
+
+task helloMike(type: com.example.tsnt.local_plugin.HelloTask) {
+    nameOfPerson = "Mike"
+}

@@ -1,8 +1,11 @@
 apply plugin: 'com.android.application'
+apply plugin: com.example.tsnt.local_plugin.FirstPlugin
+apply plugin: com.example.tsnt.local_plugin.SecondPlugin
+apply from: 'test.gradle'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.example.tsnt"
         minSdkVersion 16

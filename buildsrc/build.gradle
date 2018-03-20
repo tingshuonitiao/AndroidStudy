@@ -1,0 +1,42 @@
+apply plugin: 'groovy'
+
+dependencies {
+    compile gradleApi()     //gradle sdk
+    compile localGroovy()   //groovy sdk
+}
+
+repositories {
+    jcenter()
+}
+
+println 'This is executed during the configuration phase.'
+
+task taskInConfiguration {
+    println 'This is also executed during the configuration phase.'
+}
+
+task taskInExecution {
+    doLast {
+        println 'This is executed during the execution phase.'
+    }
+}
+
+// 如果想在执行阶段添加action到task中
+task taskAlsoInInExecution << {
+    println 'Hello, taskAlsoInInExecution!'
+}
+
+task taskInBoth {
+    // 在运行阶段, 最先执行
+    doFirst {
+        println 'This is executed first during the execution phase.'
+    }
+
+    // 在运行阶段, 最后执行
+    doLast {
+        println 'This is executed last during the execution phase.'
+    }
+
+    // 配置阶段执行
+    println 'This is executed during the configuration phase as well.'
+}

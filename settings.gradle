@@ -1,1 +1,4 @@
-include ':app'
+include ':app', ':buildsrc'
+println 'This is executed during the initialization phase.'
+
+
