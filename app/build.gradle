@@ -4,12 +4,12 @@ apply plugin: com.example.tsnt.local_plugin.SecondPlugin
 apply from: 'test.gradle'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.2"
+    compileSdkVersion ANDROID_COMPILE_SDK_VERSION
+    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
     defaultConfig {
         applicationId "com.example.tsnt"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion ANDROID_BUILD_MIN_SDK_VERSION
+        targetSdkVersion ANDROID_TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
