@@ -1,4 +1,4 @@
-package com.example.tsnt.local_plugin;
+package com.example.tsnt.plugin;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;

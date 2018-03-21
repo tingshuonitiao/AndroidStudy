@@ -1,4 +1,4 @@
-package com.example.tsnt.local_plugin
+package com.example.tsnt.task
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction

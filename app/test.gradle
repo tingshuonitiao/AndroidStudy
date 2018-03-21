@@ -15,6 +15,6 @@
 //    message = "I am Android OS"
 //}
 
-task helloMike(type: com.example.tsnt.local_plugin.HelloTask) {
+task helloMike(type: com.example.tsnt.task.HelloTask) {
     nameOfPerson = "Mike"
 }

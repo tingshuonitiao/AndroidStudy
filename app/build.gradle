@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: com.example.tsnt.local_plugin.FirstPlugin
-apply plugin: com.example.tsnt.local_plugin.SecondPlugin
+apply plugin: com.example.tsnt.plugin.FirstPlugin
+apply plugin: com.example.tsnt.plugin.SecondPlugin
 apply from: 'test.gradle'
 
 android {
