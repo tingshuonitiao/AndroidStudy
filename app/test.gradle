@@ -1,3 +1,4 @@
+// ---------- test1 ----------
 //class HiTask extends DefaultTask {
 //    // @Optional 表示在配置该Task时，message是可选的。
 //    @Optional
@@ -15,6 +16,69 @@
 //    message = "I am Android OS"
 //}
 
+// ---------- test2 ----------
 task helloMike(type: com.example.tsnt.task.HelloTask) {
     nameOfPerson = "Mike"
 }
+
+// ---------- test3 ----------
+task originalInputs() {
+    doLast {
+        file('inputs').mkdir()
+        file('inputs/1.txt').text = "Content for file 1."
+        file('inputs/2.txt').text = "Content for file 2."
+        file('inputs/3.txt').text = "Content for file 3."
+    }
+}
+
+task updateInputs() {
+    doLast {
+        file('inputs/1.txt').text = "Changed content for existing file 1."
+        file('inputs/4.txt').text = "Content for new file 4."
+    }
+}
+
+task removeInput() {
+    doLast {
+        file('inputs/3.txt').delete()
+    }
+}
+
+task removeOutput() {
+    doLast {
+        file("$buildDir/outputs/1.txt").delete()
+    }
+}
+
+task incrementalReverse(type: com.example.tsnt.task.IncrementalReverseTask) {
+    inputDir = file('inputs')
+    outputDir = file("$buildDir/outputs")
+    inputProperty = project.properties['taskInputProperty'] ?: "original"
+}
+
+// ---------- test4 ----------
+// you can put "gradle verifyUrl --url=http://www.google.com/" in console
+task verifyUrl(type: com.example.tsnt.task.UrlVerifyTask)
+
+// ---------- test5 ----------
+// you can put "gradle help --task processUrl" in console
+task processUrl(type: com.example.tsnt.task.UrlProcessTask)
+
+// ---------- test6 ----------
+task copyTask(type: Copy) {
+    from 'A'
+    into 'B'
+}
+
+// ---------- test7 ----------
+task copyTaskWithPatterns(type: Copy) {
+    from 'A'
+    into 'B'
+    include '**/*.html'
+    include '**/*.jsp'
+    exclude { details ->
+        details.file.name.endsWith('.html') &&
+                details.file.text.contains('staging')
+    }
+}
+

@@ -16,8 +16,11 @@ class FirstPlugin implements Plugin<Project> {
         System.out.println("Hello, FirstPlugin!");
         System.out.println("====================");
 
-        project.tasks.create('new Task') {
-            println("Hello, new Task -- created by FirstPlugin!")
+        project.tasks.create('ballTask') {
+            println("ballTask in configuration!")
+            doLast {
+                println 'ballTask in execution!'
+            }
         }
     }
 }
