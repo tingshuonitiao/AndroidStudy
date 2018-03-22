@@ -1,3 +1,6 @@
+apply plugin: com.example.tsnt.plugin.FirstPlugin
+apply plugin: com.example.tsnt.plugin.SecondPlugin
+
 // ---------- test1 ----------
 //class HiTask extends DefaultTask {
 //    // @Optional 表示在配置该Task时，message是可选的。
@@ -81,4 +84,25 @@ task copyTaskWithPatterns(type: Copy) {
                 details.file.text.contains('staging')
     }
 }
+
+// ---------- test8 ----------
+apply plugin: com.example.tsnt.plugin.GreetingPlugin
+
+greeting {
+    message = 'Hi'
+    greeter = 'Gradle'
+}
+
+// ---------- test9 ----------
+task greet(type: com.example.tsnt.task.GreetingToFileTask) {
+    destination = { project.greetingFile }
+}
+
+task sayGreeting(dependsOn: greet) {
+    doLast {
+        println file(greetingFile).text
+    }
+}
+
+ext.greetingFile = "$buildDir/hello.txt"
 
