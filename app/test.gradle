@@ -106,3 +106,27 @@ task sayGreeting(dependsOn: greet) {
 
 ext.greetingFile = "$buildDir/hello.txt"
 
+
+// ---------- test10 ----------
+apply plugin: com.example.tsnt.plugin.DocumentationPlugin
+
+// Configure the container
+books {
+    quickStart {
+        sourceFile = file('src/docs/quick-start')
+    }
+    userGuide {
+
+    }
+    developerGuide {
+
+    }
+}
+
+task books {
+    doLast {
+        books.each { book ->
+            println "$book.name -> $book.sourceFile"
+        }
+    }
+}
