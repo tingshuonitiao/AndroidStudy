@@ -106,7 +106,6 @@ task sayGreeting(dependsOn: greet) {
 
 ext.greetingFile = "$buildDir/hello.txt"
 
-
 // ---------- test10 ----------
 apply plugin: com.example.tsnt.plugin.DocumentationPlugin
 
@@ -129,4 +128,13 @@ task books {
             println "$book.name -> $book.sourceFile"
         }
     }
+}
+
+// ---------- test11 ----------
+apply plugin: com.example.tsnt.plugin.CreateActivityPlugin
+
+activitySetting {
+    applicationId = "com.example.tsnt"
+    packageName = "gradle"
+    activityName = "Gradle"
 }
