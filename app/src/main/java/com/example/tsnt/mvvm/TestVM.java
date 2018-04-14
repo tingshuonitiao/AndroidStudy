@@ -3,7 +3,7 @@ package com.example.tsnt.mvvm;
 import android.databinding.ObservableField;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-17 18:05
  * @Description:
  */

@@ -5,7 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-01 12:40
  * @Description: 和屏幕相关的工具类
  */

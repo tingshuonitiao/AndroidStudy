@@ -4,7 +4,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-18 20:59
  * @Description: my first gradle plugin
  */

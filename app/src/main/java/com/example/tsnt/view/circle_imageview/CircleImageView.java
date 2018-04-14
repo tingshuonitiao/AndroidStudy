@@ -16,7 +16,7 @@ import android.util.AttributeSet;
 import com.example.tsnt.R;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-04 16:43
  * @Description: 圆形ImageView
  */

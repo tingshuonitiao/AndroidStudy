@@ -5,7 +5,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2016/9/5 09:48
  * @Description: UI单位转化的工具类
  */

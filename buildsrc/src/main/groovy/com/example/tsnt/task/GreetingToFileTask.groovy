@@ -4,7 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-22 10:15
  * @Description:
  */

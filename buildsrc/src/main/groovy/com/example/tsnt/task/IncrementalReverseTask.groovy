@@ -8,7 +8,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-21 18:09
  * @Description:
  */

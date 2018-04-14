@@ -1,7 +1,7 @@
 package com.example.tsnt.entity;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-23 14:53
  * @Description:
  */

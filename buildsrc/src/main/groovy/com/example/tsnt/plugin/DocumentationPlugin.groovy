@@ -4,7 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-23 14:51
  * @Description:
  */

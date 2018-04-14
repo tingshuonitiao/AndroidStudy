@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-03 16:47
  * @Description: 通用的工具类
  */

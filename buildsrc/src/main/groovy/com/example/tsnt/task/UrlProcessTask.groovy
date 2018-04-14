@@ -6,7 +6,7 @@ import org.gradle.api.internal.tasks.options.OptionValues
 import org.gradle.api.tasks.TaskAction;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-21 20:08
  * @Description:
  */

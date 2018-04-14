@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-03-03 09:48
  * @Description: 和View相关的工具类
  */
