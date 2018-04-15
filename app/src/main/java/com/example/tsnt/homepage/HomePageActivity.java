@@ -11,6 +11,7 @@ import com.example.tsnt.R;
 import com.example.tsnt.android_base.intentservice.TestIntentServiceActivity;
 import com.example.tsnt.android_base.service_lifecycle.ServiceActivity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
+import com.example.tsnt.eventbus.EventBusAActivity;
 import com.example.tsnt.mvvm.TestActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
@@ -84,6 +85,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initServiceLifecyle());
         list.add(initImageLoader());
         list.add(initMVVM());
+        list.add(initEventBus());
         return list;
     }
 
@@ -262,6 +264,17 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TestActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化EventBus模块 ----------
+
+    private ModuleEntity initEventBus() {
+        return new ModuleEntity("EventBus", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusAActivity.launch(context);
             }
         });
     }

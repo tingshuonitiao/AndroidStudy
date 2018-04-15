@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply from: 'test.gradle'
 
+
 android {
     compileSdkVersion ANDROID_COMPILE_SDK_VERSION
     buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
@@ -11,6 +12,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ eventBusIndex : 'com.example.tsnt.MyEventBusIndex' ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -39,4 +45,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'org.greenrobot:eventbus:3.1.1'
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
 }

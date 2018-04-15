@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.example.tsnt.TsntApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -114,11 +115,18 @@
             android:name=".view.circle_progress_view.CircleProgressViewActivity"
             android:screenOrientation="portrait" />
 
-        <!--databinding-->
+        <!-- mvvm -->
         <activity
             android:name=".mvvm.TestActivity"
             android:screenOrientation="portrait" />
 
+        <!-- eventbus -->
+        <activity
+            android:name=".eventbus.EventBusAActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".eventbus.EventBusBActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
