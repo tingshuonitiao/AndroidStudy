@@ -1,7 +1,7 @@
 package com.example.tsnt.eventbus;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-04-15 10:42
  * @Description:
  */
