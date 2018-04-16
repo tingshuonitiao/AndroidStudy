@@ -14,7 +14,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ eventBusIndex : 'com.example.tsnt.MyEventBusIndex' ]
+                arguments = [eventBusIndex: 'com.example.tsnt.MyEventBusIndex']
             }
         }
     }

@@ -13,6 +13,7 @@ import com.example.tsnt.android_base.service_lifecycle.ServiceActivity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
 import com.example.tsnt.eventbus.EventBusAActivity;
 import com.example.tsnt.mvvm.TestActivity;
+import com.example.tsnt.recyclerview.RecyclerViewActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
@@ -55,11 +56,11 @@ public class HomePageActivity extends AppCompatActivity {
     private void initView() {
         setContentView(R.layout.activity_home_page);
         homePageRecyclerView = (RecyclerView) findViewById(R.id.home_page_recyclerView);
-        homePageRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         initRecyclerView();
     }
 
     private void initRecyclerView() {
+        homePageRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         HomePageListAdapter adapter = new HomePageListAdapter(initModuleEntityList());
         homePageRecyclerView.setAdapter(adapter);
     }
@@ -86,6 +87,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initImageLoader());
         list.add(initMVVM());
         list.add(initEventBus());
+        list.add(initRecyclerViewModel());
         return list;
     }
 
@@ -275,6 +277,17 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EventBusAActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化RecyclerView模块 ----------
+
+    private ModuleEntity initRecyclerViewModel() {
+        return new ModuleEntity("RecyclerView", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecyclerViewActivity.launch(context);
             }
         });
     }
