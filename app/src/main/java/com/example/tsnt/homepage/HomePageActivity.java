@@ -1,8 +1,8 @@
 package com.example.tsnt.homepage;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.tsnt.R;
 import com.example.tsnt.android_base.intentservice.TestIntentServiceActivity;
 import com.example.tsnt.android_base.service_lifecycle.ServiceActivity;
+import com.example.tsnt.arouter.ARouterTest1Activity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
 import com.example.tsnt.eventbus.EventBusAActivity;
 import com.example.tsnt.mvvm.TestActivity;
@@ -17,19 +18,18 @@ import com.example.tsnt.recyclerview.RecyclerViewActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
+import com.example.tsnt.view.base.ViewTestActivity;
 import com.example.tsnt.view.circle_imageview.CircleImageViewTestActivity;
-import com.example.tsnt.view.circle_progress_view.CircleProgressView;
 import com.example.tsnt.view.circle_progress_view.CircleProgressViewActivity;
 import com.example.tsnt.view.gauge.GaugeActivity;
 import com.example.tsnt.view.generate_poster.GeneratePosterActivity;
+import com.example.tsnt.view.gluttonous_snake.GluttonousSnakeActivity;
 import com.example.tsnt.view.horizontal_percent_view.HorizontalPercentViewActivity;
 import com.example.tsnt.view.horizontal_scollview.Demo1Activity;
 import com.example.tsnt.view.horizontal_scollview.Demo2Activity;
 import com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditTextActivity;
 import com.example.tsnt.view.material_design.AppBarLayoutTestActivity;
 import com.example.tsnt.view.self_adapting_view_pager.MainActivity;
-import com.example.tsnt.view.base.ViewTestActivity;
-import com.example.tsnt.view.gluttonous_snake.GluttonousSnakeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +88,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initMVVM());
         list.add(initEventBus());
         list.add(initRecyclerViewModel());
+        list.add(initARouter());
         return list;
     }
 
@@ -288,6 +289,16 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 RecyclerViewActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化ARouter模块 ----------
+    private ModuleEntity initARouter() {
+        return new ModuleEntity("ARouter", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouterTest1Activity.launch(context);
             }
         });
     }

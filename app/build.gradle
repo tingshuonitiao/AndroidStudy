@@ -14,7 +14,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [eventBusIndex: 'com.example.tsnt.MyEventBusIndex']
+                arguments = [
+                        eventBusIndex: 'com.example.tsnt.MyEventBusIndex',
+                        moduleName   : project.getName()
+                ]
             }
         }
     }
@@ -47,4 +50,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'org.greenrobot:eventbus:3.1.1'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
+    compile 'com.alibaba:arouter-api:1.2.4'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    compile 'com.google.code.gson:gson:2.8.2'
 }

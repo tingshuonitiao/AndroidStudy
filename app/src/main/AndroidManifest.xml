@@ -115,12 +115,12 @@
             android:name=".view.circle_progress_view.CircleProgressViewActivity"
             android:screenOrientation="portrait" />
 
-        <!-- mvvm -->
+        <!-- MVVM -->
         <activity
             android:name=".mvvm.TestActivity"
             android:screenOrientation="portrait" />
 
-        <!-- eventbus -->
+        <!-- EventBus -->
         <activity
             android:name=".eventbus.EventBusAActivity"
             android:screenOrientation="portrait" />
@@ -128,9 +128,17 @@
             android:name=".eventbus.EventBusBActivity"
             android:screenOrientation="portrait" />
 
-        <!-- recyclerview -->
+        <!-- RecyclerView -->
         <activity
             android:name=".recyclerview.RecyclerViewActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- ARouter -->
+        <activity
+            android:name=".arouter.ARouterTest1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".arouter.ARouterTest2Activity"
             android:screenOrientation="portrait" />
     </application>
 
