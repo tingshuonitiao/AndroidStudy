@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.tsnt.R;
@@ -13,15 +12,15 @@ import com.example.tsnt.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewActivity extends AppCompatActivity {
+public class RecyclerViewTest1Activity extends AppCompatActivity {
 
     private List<String> firstList;
     private List<String> secondList;
 
     private RecyclerView firstRecyclerView;
     private RecyclerView secondRecyclerView;
-    private MyAdapter firstAdapter;
-    private MyAdapter secontAdapter;
+    private Test1Adapter firstAdapter;
+    private Test1Adapter secontAdapter;
     private GridLayoutManager firstLayoutManager;
     private GridLayoutManager secontLayoutManager;
 
@@ -33,7 +32,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        setContentView(R.layout.activity_recycler_view);
+        setContentView(R.layout.activity_recycler_view_test1);
         initFirstRecyclerView();
         initSecondRecyclerView();
     }
@@ -42,14 +41,14 @@ public class RecyclerViewActivity extends AppCompatActivity {
         firstRecyclerView = (RecyclerView) findViewById(R.id.first_recyclerview);
         String title = "Alphas";
         firstList = new ArrayList<>();
-        firstAdapter = new MyAdapter(title, firstList);
+        firstAdapter = new Test1Adapter(title, firstList);
         firstRecyclerView.setAdapter(firstAdapter);
         firstLayoutManager = new GridLayoutManager(this, 2);
         firstLayoutManager.setOrientation(GridLayoutManager.HORIZONTAL);
         firstLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (firstAdapter.getItemViewType(position) == MyAdapter.TYPE_TITLE) {
+                if (firstAdapter.getItemViewType(position) == Test1Adapter.TYPE_TITLE) {
                     return 2;
                 } else {
                     return 1;
@@ -63,13 +62,13 @@ public class RecyclerViewActivity extends AppCompatActivity {
         secondRecyclerView = (RecyclerView) findViewById(R.id.second_recyclerview);
         String title = "Numbers";
         secondList = new ArrayList<>();
-        secontAdapter = new MyAdapter(title, secondList);
+        secontAdapter = new Test1Adapter(title, secondList);
         secondRecyclerView.setAdapter(secontAdapter);
         secontLayoutManager = new GridLayoutManager(this, 3);
         secontLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (secontAdapter.getItemViewType(position) == MyAdapter.TYPE_TITLE) {
+                if (secontAdapter.getItemViewType(position) == Test1Adapter.TYPE_TITLE) {
                     return 3;
                 } else {
                     return 1;
@@ -92,7 +91,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     }
 
     public static void launch(Context context) {
-        Intent intent = new Intent(context, RecyclerViewActivity.class);
+        Intent intent = new Intent(context, RecyclerViewTest1Activity.class);
         context.startActivity(intent);
     }
 }

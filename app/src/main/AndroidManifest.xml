@@ -130,7 +130,13 @@
 
         <!-- RecyclerView -->
         <activity
-            android:name=".recyclerview.RecyclerViewActivity"
+            android:name=".recyclerview.RecyclerViewMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".recyclerview.RecyclerViewTest1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".recyclerview.RecyclerViewTest2Activity"
             android:screenOrientation="portrait" />
 
         <!-- ARouter -->

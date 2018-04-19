@@ -3,7 +3,7 @@ package com.example.tsnt.arouter;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-04-16 21:29
  * @Description:
  */

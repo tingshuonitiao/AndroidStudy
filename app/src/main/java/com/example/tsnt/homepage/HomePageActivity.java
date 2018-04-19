@@ -14,7 +14,8 @@ import com.example.tsnt.arouter.ARouterTest1Activity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
 import com.example.tsnt.eventbus.EventBusAActivity;
 import com.example.tsnt.mvvm.TestActivity;
-import com.example.tsnt.recyclerview.RecyclerViewActivity;
+import com.example.tsnt.recyclerview.RecyclerViewMainActivity;
+import com.example.tsnt.recyclerview.RecyclerViewTest1Activity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
@@ -288,7 +289,7 @@ public class HomePageActivity extends AppCompatActivity {
         return new ModuleEntity("RecyclerView", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RecyclerViewActivity.launch(context);
+                RecyclerViewMainActivity.launch(context);
             }
         });
     }

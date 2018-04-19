@@ -17,9 +17,9 @@ import java.util.List;
  * @Description:
  */
 
-public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Test1Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final String TAG = MyAdapter.class.getSimpleName();
+    public static final String TAG = Test1Adapter.class.getSimpleName();
 
     public static final int TYPE_TITLE = 0;
     public static final int TYPE_ITEM = 1;
@@ -27,7 +27,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String mTitle;
     private List<String> mList;
 
-    public MyAdapter(String title, List<String> list) {
+    public Test1Adapter(String title, List<String> list) {
         mTitle = title;
         mList = list;
     }
