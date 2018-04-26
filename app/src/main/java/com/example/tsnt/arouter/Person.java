@@ -1,6 +1,6 @@
 package com.example.tsnt.arouter;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
+import java.io.Serializable;
 
 /**
  * @Author: tingshuonitiao
@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
  * @Description:
  */
 
-public class Person {
+public class Person implements Serializable {
     public String name;
     public int age;
     public String hometown;

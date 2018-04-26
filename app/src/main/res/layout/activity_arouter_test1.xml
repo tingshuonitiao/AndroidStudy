@@ -32,5 +32,16 @@
             android:text="pass object parameter"
             android:textColor="#333333"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/pass_object_tv_not_autowired"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="#D9D9D9"
+            android:padding="10dp"
+            android:text="pass object parameter not autowired"
+            android:textColor="#333333"
+            android:textSize="16sp" />
     </LinearLayout>
 </RelativeLayout>

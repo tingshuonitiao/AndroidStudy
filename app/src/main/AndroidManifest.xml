@@ -146,6 +146,9 @@
         <activity
             android:name=".arouter.ARouterTest2Activity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".arouter.ARouterTest3Activity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
