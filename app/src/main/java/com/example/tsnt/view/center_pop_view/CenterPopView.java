@@ -115,25 +115,25 @@ public class CenterPopView extends FrameLayout {
         entities.add(new RroundViewEntity("AAAA", R.mipmap.ic_launcher, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "AAAA is clicked", Toast.LENGTH_SHORT);
+                Toast.makeText(context, "AAAA is clicked", Toast.LENGTH_SHORT).show();
             }
         }));
         entities.add(new RroundViewEntity("BBBB", R.mipmap.ic_launcher, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "BBBB is clicked", Toast.LENGTH_SHORT);
+                Toast.makeText(context, "BBBB is clicked", Toast.LENGTH_SHORT).show();;
             }
         }));
         entities.add(new RroundViewEntity("CCCC", R.mipmap.ic_launcher, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "CCCC is clicked", Toast.LENGTH_SHORT);
+                Toast.makeText(context, "CCCC is clicked", Toast.LENGTH_SHORT).show();;
             }
         }));
         entities.add(new RroundViewEntity("DDDD", R.mipmap.ic_launcher, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "DDDD is clicked", Toast.LENGTH_SHORT);
+                Toast.makeText(context, "DDDD is clicked", Toast.LENGTH_SHORT).show();;
             }
         }));
     }
