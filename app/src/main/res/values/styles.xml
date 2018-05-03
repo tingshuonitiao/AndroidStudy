@@ -8,4 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="style_center_pop_dialog" parent="android:Animation">
+        <item name="android:windowAnimationStyle">@style/animation_center_pop_dialog</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="animation_center_pop_dialog">
+        <item name="android:windowEnterAnimation">@anim/center_pop_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/center_pop_dialog_exit</item>
+    </style>
+
 </resources>
