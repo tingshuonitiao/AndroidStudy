@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,16 +24,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-05-03 20:52
  * @Description:
  */
 
 public class CenterPopView extends FrameLayout {
-    // 扩散动画的时间
-    public static final int SPREAD_ANIMATION_DURATION = 300;
-    // 旋转动画的时间
-    public static final int ROTATION_ANIMATION_DURATION = 500;
+
+    // 周围view扩散动画的时间
+    public static final int ROUND_SPREAD_ANIMATION_DURATION = 300;
+    // 第一次周围view旋转动画的时间
+    public static final int FIRST_ROUND_ROTATION_ANIMATION_DURATION = 400;
+    // 中心View旋转动画的时间
+    public static final int CENTER_ROTATION_ANIMATION_DURATION = ROUND_SPREAD_ANIMATION_DURATION + FIRST_ROUND_ROTATION_ANIMATION_DURATION;
+    // 周围view抖动动画的时间
+    public static final int ROUND_SHAKE_ANIMATION_DURATION = 200;
+    // 第二次周围view旋转动画的时间, 因为抖动的同时旋转, 所以时间一样
+    public static final int SECOND_ROUND_ROTATION_ANIMATION_DURATION = ROUND_SHAKE_ANIMATION_DURATION;
+    // 周围view收缩动画的时间
+    public static final int ROUND_SHRINK_ANIMATION_DURATION = 200;
+    // 第二次中心View旋转动画的时间
+    public static final int SECOND_CENTER_ROTATION_ANIMATION_DURATION = ROUND_SHAKE_ANIMATION_DURATION + ROUND_SHRINK_ANIMATION_DURATION;
 
     // 中心的x坐标
     private int centerX;
@@ -50,6 +62,7 @@ public class CenterPopView extends FrameLayout {
     private int startDistance;
     // 结束时中心view和周围view的距离
     private int endDistance;
+    private int shakeDistance;
     // 当前周围view图片的边长
     private float currDiameter;
     // 当前中心view和周围view的距离
@@ -72,10 +85,21 @@ public class CenterPopView extends FrameLayout {
 
     // 中心view的旋转动画
     private Animation centerRotateAnimation;
-    // 周围view的旋转动画
-    private Animation roundRotateAnimation;
     // 周围view的扩散动画
     private ValueAnimator spreadAnimator;
+    // 周围view的抖动动画
+    private ValueAnimator roundShakeAnimator;
+    // 第一次周围view的旋转动画
+    private Animation firstRoundRotateAnimation;
+    // 第二次周围view的旋转动画
+    private Animation secondRoundRotateAnimation;
+    // 周围view的收缩动画
+    private ValueAnimator roundShrinkAnimator;
+    // 第二次中心view的旋转动画
+    private Animation secondCenterRotateAnimation;
+
+    // 中心view的点击事件
+    private OnCenterClickListener onCenterClickListener;
 
     public CenterPopView(Context context) {
         this(context, null);
@@ -102,6 +126,7 @@ public class CenterPopView extends FrameLayout {
         endDiameter = DisplayUtil.dp2px(context, 40);
         startDistance = DisplayUtil.dp2px(context, 40);
         endDistance = DisplayUtil.dp2px(context, 117);
+        shakeDistance = DisplayUtil.dp2px(context, 120);
         textViewHeight = DisplayUtil.dp2px(context, 16);
         viewList = new ArrayList<>();
         entities = new ArrayList<>();
@@ -112,28 +137,31 @@ public class CenterPopView extends FrameLayout {
      * 初始化周围view的数据
      */
     private void initRoundData() {
-        entities.add(new RroundViewEntity("AAAA", R.mipmap.ic_launcher, new View.OnClickListener() {
+        entities.add(new RroundViewEntity("AAAA", R.mipmap.icon_aaaa, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "AAAA is clicked", Toast.LENGTH_SHORT).show();
             }
         }));
-        entities.add(new RroundViewEntity("BBBB", R.mipmap.ic_launcher, new View.OnClickListener() {
+        entities.add(new RroundViewEntity("BBBB", R.mipmap.icon_bbbb, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "BBBB is clicked", Toast.LENGTH_SHORT).show();;
+                Toast.makeText(context, "BBBB is clicked", Toast.LENGTH_SHORT).show();
+                ;
             }
         }));
-        entities.add(new RroundViewEntity("CCCC", R.mipmap.ic_launcher, new View.OnClickListener() {
+        entities.add(new RroundViewEntity("CCCC", R.mipmap.icon_cccc, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "CCCC is clicked", Toast.LENGTH_SHORT).show();;
+                Toast.makeText(context, "CCCC is clicked", Toast.LENGTH_SHORT).show();
+                ;
             }
         }));
-        entities.add(new RroundViewEntity("DDDD", R.mipmap.ic_launcher, new View.OnClickListener() {
+        entities.add(new RroundViewEntity("DDDD", R.mipmap.icon_dddd, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "DDDD is clicked", Toast.LENGTH_SHORT).show();;
+                Toast.makeText(context, "DDDD is clicked", Toast.LENGTH_SHORT).show();
+                ;
             }
         }));
     }
@@ -146,6 +174,8 @@ public class CenterPopView extends FrameLayout {
         initCenterView();
         // 初始周围的View
         initRoundView();
+        // 初始化动画
+        initAnimation();
     }
 
     /**
@@ -157,8 +187,14 @@ public class CenterPopView extends FrameLayout {
                 DisplayUtil.dp2px(context, 50),
                 DisplayUtil.dp2px(context, 50));
         centerView.setLayoutParams(centerlayoutParams);
-        centerView.setImageResource(R.mipmap.ic_launcher);
+        centerView.setImageResource(R.mipmap.icon_add);
         addView(centerView);
+        centerView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startShrink();
+            }
+        });
     }
 
     /**
@@ -180,6 +216,26 @@ public class CenterPopView extends FrameLayout {
             // 添加到view的集合
             viewList.add(roundView);
         }
+    }
+
+    /**
+     * 初始化动画
+     */
+    private void initAnimation() {
+        // 初始化中心view的旋转动画
+        initCenterRotateAnimation();
+        // 初始化周围view的扩散动画
+        initRoundSpreadAnimation();
+        // 初始化周围view的抖动动画
+        initRoundShakeAnimation();
+        // 初始化第一次周围view的旋转动画
+        initFirstRoundRotateAnimation();
+        // 初始化第二次周围view的旋转动画
+        initSecondRoundRotateAnimation();
+        // 初始化周围view的收缩动画
+        initRoundShrinkAnimation();
+        // 初始化中心view第二次旋转动画
+        initSecondCenterRotateAnimation();
     }
 
     @Override
@@ -216,26 +272,82 @@ public class CenterPopView extends FrameLayout {
      * 初始化中心view的旋转动画
      */
     private void initCenterRotateAnimation() {
-        centerRotateAnimation = new RotateAnimation(0, 315,
+        centerRotateAnimation = new RotateAnimation(0, -315,
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
-        centerRotateAnimation.setDuration(SPREAD_ANIMATION_DURATION + ROTATION_ANIMATION_DURATION);
+        centerRotateAnimation.setDuration(CENTER_ROTATION_ANIMATION_DURATION);
         centerRotateAnimation.setRepeatCount(0);
         centerRotateAnimation.setFillAfter(true);
     }
 
     /**
-     * 初始化周围view的旋转动画
+     * 初始化周围view的扩散动画
      */
-    private void initRoundRotateAnimation() {
+    private void initRoundSpreadAnimation() {
+        spreadAnimator = ValueAnimator.ofFloat(0, 1.f);
+        spreadAnimator.setInterpolator(new AccelerateInterpolator());
+        spreadAnimator.setDuration(ROUND_SPREAD_ANIMATION_DURATION);
+        spreadAnimator.setRepeatCount(0);
+        spreadAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // 更新位置
+                Float value = (Float) animation.getAnimatedValue();
+                currDiameter = (endDiameter - startDiameter) * value + startDiameter;
+                currDistance = (endDistance - startDistance) * value + startDistance;
+                for (int i = 0; i < viewList.size(); i++) {
+                    View roundView = viewList.get(i);
+                    roundView.getLayoutParams().width = getLayoutWidth(currDiameter);
+                    roundView.getLayoutParams().height = getLayoutHeight(currDiameter);
+                    requestLayout();
+                }
+            }
+        });
+        spreadAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                // 扩散动画的结尾, 开启旋转动画
+                for (int i = 0; i < viewList.size(); i++) {
+                    viewList.get(i).startAnimation(firstRoundRotateAnimation);
+                }
+                roundShakeAnimator.start();
+            }
+        });
+    }
+
+    /**
+     * 初始化周围view的抖动动画
+     */
+    private void initRoundShakeAnimation() {
+        roundShakeAnimator = new ValueAnimator().ofFloat(0, 1.f);
+        roundShakeAnimator.setInterpolator(new DecelerateInterpolator());
+        roundShakeAnimator.setDuration(ROUND_SHAKE_ANIMATION_DURATION / 4);
+        roundShakeAnimator.setRepeatCount(3);
+        roundShakeAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        roundShakeAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // 更新位置
+                Float value = (Float) animation.getAnimatedValue();
+                currDistance = (shakeDistance - endDistance) * value + endDistance;
+                requestLayout();
+            }
+        });
+    }
+
+    /**
+     * 初始化第一次周围view的旋转动画
+     */
+    private void initFirstRoundRotateAnimation() {
         float pivotYValue = endDiameter / 2.f / (endDiameter + textViewHeight);
-        roundRotateAnimation = new RotateAnimation(0, 360,
+        firstRoundRotateAnimation = new RotateAnimation(180, 0,
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, pivotYValue);
-        roundRotateAnimation.setDuration(ROTATION_ANIMATION_DURATION);
-        roundRotateAnimation.setRepeatCount(0);
-        roundRotateAnimation.setFillAfter(true);
-        roundRotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+        firstRoundRotateAnimation.setDuration(FIRST_ROUND_ROTATION_ANIMATION_DURATION);
+        firstRoundRotateAnimation.setRepeatCount(0);
+        firstRoundRotateAnimation.setFillAfter(true);
+        firstRoundRotateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -260,20 +372,54 @@ public class CenterPopView extends FrameLayout {
     }
 
     /**
-     * 初始化周围view的扩散动画
+     * 初始化第二次周围view的旋转动画
      */
-    private void initRoundSpreadAnimation() {
-        spreadAnimator = ValueAnimator.ofFloat(0, 100);
-        spreadAnimator.setInterpolator(new AccelerateInterpolator());
-        spreadAnimator.setDuration(SPREAD_ANIMATION_DURATION);
-        spreadAnimator.setRepeatCount(0);
-        spreadAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    private void initSecondRoundRotateAnimation() {
+        float pivotYValue = endDiameter / 2.f / (endDiameter + textViewHeight);
+        secondRoundRotateAnimation = new RotateAnimation(-270, 0,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, pivotYValue);
+        secondRoundRotateAnimation.setDuration(SECOND_ROUND_ROTATION_ANIMATION_DURATION);
+        secondRoundRotateAnimation.setRepeatCount(0);
+        secondRoundRotateAnimation.setFillAfter(true);
+        secondRoundRotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                for (int i = 0; i < viewList.size(); i++) {
+                    View roundView = viewList.get(i);
+                    TextView nameTv = (TextView) roundView.findViewById(R.id.name_tv);
+                    // 隐藏文字
+                    nameTv.setVisibility(INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                roundShrinkAnimator.start();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+    /**
+     * 初始化周围view的收缩动画
+     */
+    private void initRoundShrinkAnimation() {
+        roundShrinkAnimator = ValueAnimator.ofFloat(1.f, 0);
+        roundShrinkAnimator.setInterpolator(new AccelerateInterpolator());
+        roundShrinkAnimator.setDuration(ROUND_SHRINK_ANIMATION_DURATION);
+        roundShrinkAnimator.setRepeatCount(0);
+        roundShrinkAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 // 更新位置
                 Float value = (Float) animation.getAnimatedValue();
-                currDiameter = (endDiameter - startDiameter) * (value / 100) + startDiameter;
-                currDistance = (endDistance - startDistance) * (value / 100) + startDistance;
+                currDiameter = (endDiameter - startDiameter) * value + startDiameter;
+                currDistance = (endDistance - startDistance) * value + startDistance;
                 for (int i = 0; i < viewList.size(); i++) {
                     View roundView = viewList.get(i);
                     roundView.getLayoutParams().width = getLayoutWidth(currDiameter);
@@ -282,16 +428,39 @@ public class CenterPopView extends FrameLayout {
                 }
             }
         });
-        spreadAnimator.addListener(new AnimatorListenerAdapter() {
+        roundShrinkAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
             @Override
             public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                // 扩散动画的结尾, 开启旋转动画
-                for (int i = 0; i < viewList.size(); i++) {
-                    viewList.get(i).startAnimation(roundRotateAnimation);
-                }
+                onCenterClickListener.onCenterClick();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
             }
         });
+    }
+
+    /**
+     * 初始化中心view第二次旋转动画
+     */
+    private void initSecondCenterRotateAnimation() {
+        secondCenterRotateAnimation = new RotateAnimation(-315, 0,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        secondCenterRotateAnimation.setDuration(SECOND_CENTER_ROTATION_ANIMATION_DURATION);
+        secondCenterRotateAnimation.setRepeatCount(0);
+        secondCenterRotateAnimation.setFillAfter(true);
     }
 
     /**
@@ -322,29 +491,36 @@ public class CenterPopView extends FrameLayout {
     // -------------------- ↓↓↓↓ 暴露给外部调用的方法 ↓↓↓↓ --------------------
 
     /**
-     * 开启动画
+     * 开始膨胀
      */
-    public void startAnimation() {
-        // 初始化中心view的旋转动画
-        initCenterRotateAnimation();
-        // 初始化周围view的旋转动画
-        initRoundRotateAnimation();
-        // 初始化周围view的扩散动画
-        initRoundSpreadAnimation();
+    public void startPop() {
         // 开启动画
         spreadAnimator.start();
         centerView.startAnimation(centerRotateAnimation);
     }
 
     /**
+     * 开始收缩
+     */
+    public void startShrink() {
+        // 开启动画
+        for (int i = 0; i < viewList.size(); i++) {
+            viewList.get(i).startAnimation(secondRoundRotateAnimation);
+        }
+        centerView.startAnimation(secondCenterRotateAnimation);
+    }
+
+    /**
      * 设置中心View对应的点击事件
      *
-     * @param onClickListener
+     * @param clickListener
      */
-    public void setOnCenterViewClickListener(View.OnClickListener onClickListener) {
-        if (onClickListener != null) {
-            centerView.setOnClickListener(onClickListener);
-        }
+    public void setOnCenterClickListener(OnCenterClickListener clickListener) {
+        onCenterClickListener = clickListener;
+    }
+
+    public interface OnCenterClickListener {
+        void onCenterClick();
     }
 
     /**

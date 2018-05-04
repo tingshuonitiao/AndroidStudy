@@ -17,7 +17,7 @@ import com.example.tsnt.R;
 import com.example.tsnt.utils.DisplayUtil;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-05-03 21:02
  * @Description:
  */
@@ -58,12 +58,12 @@ public class CenterPopDialog extends DialogFragment {
         // 动态添加一个CenterPopView
         CenterPopView centerPopView = new CenterPopView(context);
         ((FrameLayout) view).addView(centerPopView, ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dp2px(context, 180));
-        centerPopView.startAnimation();
-        centerPopView.setOnCenterViewClickListener(new View.OnClickListener() {
+        centerPopView.setOnCenterClickListener(new CenterPopView.OnCenterClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onCenterClick() {
                 dismiss();
             }
         });
+        centerPopView.startPop();
     }
 }
