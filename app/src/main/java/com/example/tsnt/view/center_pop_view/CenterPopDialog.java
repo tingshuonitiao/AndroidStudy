@@ -2,6 +2,7 @@ package com.example.tsnt.view.center_pop_view;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,9 @@ import com.example.tsnt.utils.DisplayUtil;
  */
 
 public class CenterPopDialog extends DialogFragment {
+
+    private CenterPopView centerPopView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public class CenterPopDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         Context context = view.getContext();
         // 动态添加一个CenterPopView
-        CenterPopView centerPopView = new CenterPopView(context);
+        centerPopView = new CenterPopView(context);
         ((FrameLayout) view).addView(centerPopView, ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dp2px(context, 180));
         centerPopView.setOnCenterClickListener(new CenterPopView.OnCenterClickListener() {
             @Override
@@ -65,5 +69,12 @@ public class CenterPopDialog extends DialogFragment {
             }
         });
         centerPopView.startPop();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        // 资源回收
+        centerPopView.recycle();
     }
 }

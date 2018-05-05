@@ -12,7 +12,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +28,7 @@ import java.util.List;
  * @Description:
  */
 
-public class CenterPopView extends FrameLayout {
+public class CenterPopView extends ViewGroup {
 
     // 周围view扩散动画的时间
     public static final int ROUND_SPREAD_ANIMATION_DURATION = 300;
@@ -241,6 +240,7 @@ public class CenterPopView extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
         width = MeasureSpec.getSize(widthMeasureSpec);
         height = MeasureSpec.getSize(heightMeasureSpec);
         centerX = width / 2;
@@ -249,22 +249,21 @@ public class CenterPopView extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
         centerView.layout(
-                centerX - centerView.getWidth() / 2,
-                centerY - centerView.getHeight() / 2,
-                centerX + centerView.getWidth() / 2,
-                centerY + centerView.getHeight() / 2);
+                centerX - centerView.getMeasuredWidth() / 2,
+                centerY - centerView.getMeasuredHeight() / 2,
+                centerX + centerView.getMeasuredWidth() / 2,
+                centerY + centerView.getMeasuredHeight() / 2);
         for (int i = 0; i < viewList.size(); i++) {
             View roundView = viewList.get(i);
             int angle = startAngle + (endAngle - startAngle) / (viewList.size() - 1) * i;
             int x = (int) (centerX + Math.cos(Math.toRadians(angle)) * currDistance);
             int y = (int) (centerY - Math.sin(Math.toRadians(angle)) * currDistance);
             roundView.layout(
-                    x - roundView.getWidth() / 2,
-                    y - roundView.getHeight() / 2,
-                    x + roundView.getWidth() / 2,
-                    y + roundView.getHeight() / 2);
+                    x - roundView.getMeasuredWidth() / 2,
+                    y - roundView.getMeasuredHeight() / 2,
+                    x + roundView.getMeasuredWidth() / 2,
+                    y + roundView.getMeasuredHeight() / 2);
         }
     }
 
@@ -488,13 +487,32 @@ public class CenterPopView extends FrameLayout {
         return allHeight;
     }
 
+    /**
+     * 取消膨胀动画
+     */
+    private void cancelPopAnimation() {
+        centerRotateAnimation.cancel();
+        spreadAnimator.cancel();
+        roundShakeAnimator.cancel();
+        firstRoundRotateAnimation.cancel();
+    }
+
+    /**
+     * 取消收缩动画
+     */
+    private void cancelShrinkAnimation() {
+        secondRoundRotateAnimation.cancel();
+        roundShrinkAnimator.cancel();
+        secondCenterRotateAnimation.cancel();
+    }
+
     // -------------------- ↓↓↓↓ 暴露给外部调用的方法 ↓↓↓↓ --------------------
 
     /**
      * 开始膨胀
      */
     public void startPop() {
-        // 开启动画
+        // 开启膨胀动画
         spreadAnimator.start();
         centerView.startAnimation(centerRotateAnimation);
     }
@@ -503,11 +521,23 @@ public class CenterPopView extends FrameLayout {
      * 开始收缩
      */
     public void startShrink() {
-        // 开启动画
+        // 取消膨胀动画
+        cancelPopAnimation();
+        // 开启收缩动画
         for (int i = 0; i < viewList.size(); i++) {
             viewList.get(i).startAnimation(secondRoundRotateAnimation);
         }
         centerView.startAnimation(secondCenterRotateAnimation);
+    }
+
+    /**
+     * 资源回收
+     */
+    public void recycle() {
+        // 取消膨胀动画
+        cancelPopAnimation();
+        // 取消收缩动画
+        cancelShrinkAnimation();
     }
 
     /**
