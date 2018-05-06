@@ -114,6 +114,9 @@
         <activity
             android:name=".view.circle_progress_view.CircleProgressViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.rotate_textview.RotateTextViewActivity"
+            android:screenOrientation="portrait" />
 
         <!-- MVVM -->
         <activity

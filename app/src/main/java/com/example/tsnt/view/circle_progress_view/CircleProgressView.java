@@ -79,8 +79,6 @@ public class CircleProgressView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
         width = this.getWidth();
         height = this.getHeight();
 

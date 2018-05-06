@@ -32,6 +32,8 @@ import com.example.tsnt.view.horizontal_scollview.Demo1Activity;
 import com.example.tsnt.view.horizontal_scollview.Demo2Activity;
 import com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditTextActivity;
 import com.example.tsnt.view.material_design.AppBarLayoutTestActivity;
+import com.example.tsnt.view.rotate_textview.RotateTextView;
+import com.example.tsnt.view.rotate_textview.RotateTextViewActivity;
 import com.example.tsnt.view.self_adapting_view_pager.MainActivity;
 
 import java.util.ArrayList;
@@ -85,6 +87,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initHorizontalScollview2());
         list.add(initLimitScrollEditText());
         list.add(initMaterialDesign());
+        list.add(initRotateTextView());
         list.add(initSelfAdaptingViewPager());
         list.add(initIntentServicetTest());
         list.add(initServiceLifecyle());
@@ -230,6 +233,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AppBarLayoutTestActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initRotateTextView() {
+        return new ModuleEntity("RotateTextView", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RotateTextViewActivity.launch(context);
             }
         });
     }
