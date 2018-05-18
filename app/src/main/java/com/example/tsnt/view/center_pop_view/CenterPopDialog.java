@@ -13,9 +13,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.tsnt.R;
 import com.example.tsnt.utils.DisplayUtil;
+
+import java.util.List;
 
 /**
  * @Author: tingshuonitiao
@@ -26,6 +29,8 @@ import com.example.tsnt.utils.DisplayUtil;
 public class CenterPopDialog extends DialogFragment {
 
     private CenterPopView centerPopView;
+
+    List<CenterPopView.RroundViewEntity> entities;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class CenterPopDialog extends DialogFragment {
         Context context = view.getContext();
         // 动态添加一个CenterPopView
         centerPopView = new CenterPopView(context);
+        centerPopView.init(entities);
         ((FrameLayout) view).addView(centerPopView, ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dp2px(context, 180));
         centerPopView.setOnCenterClickListener(new CenterPopView.OnCenterClickListener() {
             @Override
@@ -76,5 +82,9 @@ public class CenterPopDialog extends DialogFragment {
         super.onDismiss(dialog);
         // 资源回收
         centerPopView.recycle();
+    }
+
+    public void setData(List<CenterPopView.RroundViewEntity> list) {
+        entities = list;
     }
 }

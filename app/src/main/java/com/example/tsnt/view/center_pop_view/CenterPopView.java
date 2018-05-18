@@ -111,8 +111,6 @@ public class CenterPopView extends ViewGroup {
     public CenterPopView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
-        initParams();
-        initView();
     }
 
     /**
@@ -129,40 +127,15 @@ public class CenterPopView extends ViewGroup {
         textViewHeight = DisplayUtil.dp2px(context, 16);
         viewList = new ArrayList<>();
         entities = new ArrayList<>();
-        initRoundData();
     }
 
     /**
      * 初始化周围view的数据
      */
-    private void initRoundData() {
-        entities.add(new RroundViewEntity("AAAA", R.mipmap.icon_aaaa, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "AAAA is clicked", Toast.LENGTH_SHORT).show();
-            }
-        }));
-        entities.add(new RroundViewEntity("BBBB", R.mipmap.icon_bbbb, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "BBBB is clicked", Toast.LENGTH_SHORT).show();
-                ;
-            }
-        }));
-        entities.add(new RroundViewEntity("CCCC", R.mipmap.icon_cccc, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "CCCC is clicked", Toast.LENGTH_SHORT).show();
-                ;
-            }
-        }));
-        entities.add(new RroundViewEntity("DDDD", R.mipmap.icon_dddd, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "DDDD is clicked", Toast.LENGTH_SHORT).show();
-                ;
-            }
-        }));
+    private void initRoundData(List<RroundViewEntity> list) {
+        for (int i = 0; i < list.size(); i++) {
+            entities.add(list.get(i));
+        }
     }
 
     /**
@@ -509,6 +482,18 @@ public class CenterPopView extends ViewGroup {
     // -------------------- ↓↓↓↓ 暴露给外部调用的方法 ↓↓↓↓ --------------------
 
     /**
+     * 初始化数据
+     *
+     * @param list
+     */
+    public void init(List<RroundViewEntity> list) {
+        if (list == null || list.size() == 0) return;
+        initParams();
+        initRoundData(list);
+        initView();
+    }
+
+    /**
      * 开始膨胀
      */
     public void startPop() {
@@ -556,7 +541,7 @@ public class CenterPopView extends ViewGroup {
     /**
      * 周围view对应的数据封装类
      */
-    static class RroundViewEntity {
+    public static class RroundViewEntity {
         private String name;
         private int resId;
         private View.OnClickListener onClickListener;

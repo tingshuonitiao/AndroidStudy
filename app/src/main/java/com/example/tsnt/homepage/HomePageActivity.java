@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.tsnt.R;
 import com.example.tsnt.android_base.intentservice.TestIntentServiceActivity;
@@ -22,6 +23,7 @@ import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivit
 import com.example.tsnt.view.banner.BannerTestActivity;
 import com.example.tsnt.view.base.ViewTestActivity;
 import com.example.tsnt.view.center_pop_view.CenterPopDialog;
+import com.example.tsnt.view.center_pop_view.CenterPopView;
 import com.example.tsnt.view.circle_imageview.CircleImageViewTestActivity;
 import com.example.tsnt.view.circle_progress_view.CircleProgressViewActivity;
 import com.example.tsnt.view.gauge.GaugeActivity;
@@ -142,6 +144,35 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CenterPopDialog centerPopDialog = new CenterPopDialog();
+                List<CenterPopView.RroundViewEntity> list = new ArrayList<>();
+                list.add(new CenterPopView.RroundViewEntity("AAAA", R.mipmap.icon_aaaa, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "AAAA is clicked", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+                list.add(new CenterPopView.RroundViewEntity("BBBB", R.mipmap.icon_bbbb, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "BBBB is clicked", Toast.LENGTH_SHORT).show();
+                        ;
+                    }
+                }));
+                list.add(new CenterPopView.RroundViewEntity("CCCC", R.mipmap.icon_cccc, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "CCCC is clicked", Toast.LENGTH_SHORT).show();
+                        ;
+                    }
+                }));
+                list.add(new CenterPopView.RroundViewEntity("DDDD", R.mipmap.icon_dddd, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "DDDD is clicked", Toast.LENGTH_SHORT).show();
+                        ;
+                    }
+                }));
+                centerPopDialog.setData(list);
                 centerPopDialog.show(HomePageActivity.this.getFragmentManager(), "CenterPopView");
             }
         });
