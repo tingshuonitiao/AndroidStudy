@@ -8,16 +8,12 @@
 
 **1. AutoLineFeedLayout**
 
-description: 可自动换行的布局
+可自动换行的布局
 
-display: 
-
-<img src="picture/AutoLineFeedLayout.png" width="50%"> 
+<img src="picture/AutoLineFeedLayout.png" width="30%"> 
 
 **2. banner**
 
-description: 简单易实现的banner, 参考[https://github.com/youth5201314/banner](https://github.com/youth5201314/banner).
+简单易实现的无线循环轮播图, 参考[https://github.com/youth5201314/banner](https://github.com/youth5201314/banner).
 
-display：
-
-<img src="picture/banner.gif" width="50%">
+<img src="picture/banner.gif" width="30%">
