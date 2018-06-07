@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatTextView;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-05-06 11:47
  * @Description:
  */

@@ -12,7 +12,7 @@ import android.view.View;
 import com.example.tsnt.utils.DisplayUtil;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-05-06 13:56
  * @Description:
  */
