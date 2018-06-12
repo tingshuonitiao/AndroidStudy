@@ -36,6 +36,7 @@ import com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditTextActivity;
 import com.example.tsnt.view.material_design.AppBarLayoutTestActivity;
 import com.example.tsnt.view.rotate_textview.RotateTextView;
 import com.example.tsnt.view.rotate_textview.RotateTextViewActivity;
+import com.example.tsnt.view.round_angle_imageview.RoundAngleImageViewActivity;
 import com.example.tsnt.view.self_adapting_view_pager.MainActivity;
 
 import java.util.ArrayList;
@@ -90,6 +91,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initLimitScrollEditText());
         list.add(initMaterialDesign());
         list.add(initRotateTextView());
+        list.add(initRoundAngleImageView());
         list.add(initSelfAdaptingViewPager());
         list.add(initIntentServicetTest());
         list.add(initServiceLifecyle());
@@ -273,6 +275,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 RotateTextViewActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initRoundAngleImageView() {
+        return new ModuleEntity("RoundAngleImageView", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RoundAngleImageViewActivity.launch(context);
             }
         });
     }

@@ -117,6 +117,9 @@
         <activity
             android:name=".view.rotate_textview.RotateTextViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.round_angle_imageview.RoundAngleImageViewActivity"
+            android:screenOrientation="portrait" />
 
         <!-- MVVM -->
         <activity
@@ -153,5 +156,4 @@
             android:name=".arouter.ARouterTest3Activity"
             android:screenOrientation="portrait" />
     </application>
-
 </manifest>
