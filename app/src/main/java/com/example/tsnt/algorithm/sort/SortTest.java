@@ -12,7 +12,7 @@ public class SortTest {
         int[] test1 = {1, 2, 1, 2, 1, 2, 1, 2, 1, 2};
         int[] test2 = {9, 3, 5, 7, 1, 4, 10, 6, 8, 2};
         int[] test3 = {9, 8, 11, 17, 25, 0, 4, 5, 6, 7, 8};
-        SortInterface sort = new HeapSort();
+        SortInterface sort = new MergeSort();
         sort.sort(test1);
         sort.sort(test2);
         sort.sort(test3);
