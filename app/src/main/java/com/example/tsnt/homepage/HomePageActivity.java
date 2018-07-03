@@ -2,7 +2,6 @@ package com.example.tsnt.homepage;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
 import com.example.tsnt.eventbus.EventBusAActivity;
 import com.example.tsnt.mvvm.TestActivity;
 import com.example.tsnt.recyclerview.RecyclerViewMainActivity;
-import com.example.tsnt.recyclerview.RecyclerViewTest1Activity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
@@ -34,7 +32,6 @@ import com.example.tsnt.view.horizontal_scollview.Demo1Activity;
 import com.example.tsnt.view.horizontal_scollview.Demo2Activity;
 import com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditTextActivity;
 import com.example.tsnt.view.material_design.AppBarLayoutTestActivity;
-import com.example.tsnt.view.rotate_textview.RotateTextView;
 import com.example.tsnt.view.rotate_textview.RotateTextViewActivity;
 import com.example.tsnt.view.round_angle_imageview.RoundAngleImageViewActivity;
 import com.example.tsnt.view.self_adapting_view_pager.MainActivity;
@@ -54,6 +51,10 @@ public class HomePageActivity extends AppCompatActivity {
 
     private RecyclerView homePageRecyclerView;
 
+    private int distance = 0;
+    private List<ModuleEntity> list;
+    private boolean isSlidingToBottom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,18 +64,43 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void initView() {
         setContentView(R.layout.activity_home_page);
-        homePageRecyclerView = (RecyclerView) findViewById(R.id.home_page_recyclerView);
         initRecyclerView();
     }
 
     private void initRecyclerView() {
+        homePageRecyclerView = (RecyclerView) findViewById(R.id.home_page_recyclerView);
         homePageRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         HomePageListAdapter adapter = new HomePageListAdapter(initModuleEntityList());
         homePageRecyclerView.setAdapter(adapter);
+        homePageRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                // dy值大于0表示正在向下滑动，小于或等于0表示向上滑动或停止
+                isSlidingToBottom = dy > 0;
+            }
+
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滑动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // 获取最后一个完全显示的itemPosition
+                    int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                    int itemCount = manager.getItemCount();
+                    // 判断是否滑动到了最后一个Item，并且是向下滑动
+                    if (lastItemPosition == (itemCount - 1) && isSlidingToBottom) {
+                        // 暂无更多
+                        Toast.makeText(HomePageActivity.this, "暂无更多", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+        });
     }
 
     private List<ModuleEntity> initModuleEntityList() {
-        List<ModuleEntity> list = new ArrayList<>();
+        list = new ArrayList<>();
         list.add(initAutoFixedLayout());
         list.add(initAutoLineFeedLayout());
         list.add(initBanner());
