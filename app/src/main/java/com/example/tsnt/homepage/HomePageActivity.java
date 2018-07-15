@@ -14,6 +14,7 @@ import com.example.tsnt.android_base.service_lifecycle.ServiceActivity;
 import com.example.tsnt.arouter.ARouterTest1Activity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
 import com.example.tsnt.eventbus.EventBusAActivity;
+import com.example.tsnt.hotfix.SimpleHotFixActivity;
 import com.example.tsnt.mvvm.TestActivity;
 import com.example.tsnt.recyclerview.RecyclerViewMainActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
@@ -126,6 +127,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initEventBus());
         list.add(initRecyclerViewModel());
         list.add(initARouter());
+        list.add(initHotFix());
         return list;
     }
 
@@ -393,6 +395,16 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ARouterTest1Activity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化HotFix模块 ----------
+    private ModuleEntity initHotFix() {
+        return new ModuleEntity("HotFix", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleHotFixActivity.launch(context);
             }
         });
     }

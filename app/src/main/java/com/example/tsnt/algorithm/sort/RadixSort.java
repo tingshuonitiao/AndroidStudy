@@ -1,7 +1,7 @@
 package com.example.tsnt.algorithm.sort;
 
 /**
- * @Author: zhangxiaozong
+ * @Author: tingshuonitiao
  * @Date: 2018-06-24 21:58
  * @Description: 基数排序
  */
