@@ -120,6 +120,9 @@
         <activity
             android:name=".view.round_angle_imageview.RoundAngleImageViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.flip_dialog.FlipDialogActivity"
+            android:screenOrientation="portrait" />
 
         <!-- MVVM -->
         <activity

@@ -21,4 +21,11 @@
         <item name="android:windowExitAnimation">@anim/center_pop_dialog_exit</item>
     </style>
 
+    <style name="style_flip_dialog" parent="android:Animation">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

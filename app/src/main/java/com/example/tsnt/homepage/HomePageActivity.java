@@ -25,6 +25,7 @@ import com.example.tsnt.view.center_pop_view.CenterPopDialog;
 import com.example.tsnt.view.center_pop_view.CenterPopView;
 import com.example.tsnt.view.circle_imageview.CircleImageViewTestActivity;
 import com.example.tsnt.view.circle_progress_view.CircleProgressViewActivity;
+import com.example.tsnt.view.flip_dialog.FlipDialogActivity;
 import com.example.tsnt.view.gauge.GaugeActivity;
 import com.example.tsnt.view.generate_poster.GeneratePosterActivity;
 import com.example.tsnt.view.gluttonous_snake.GluttonousSnakeActivity;
@@ -120,6 +121,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initRotateTextView());
         list.add(initRoundAngleImageView());
         list.add(initSelfAdaptingViewPager());
+        list.add(initFlipDialog());
         list.add(initIntentServicetTest());
         list.add(initServiceLifecyle());
         list.add(initImageLoader());
@@ -321,6 +323,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initFlipDialog() {
+        return new ModuleEntity("FlipDialog", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FlipDialogActivity.launch(context);
             }
         });
     }
