@@ -14,6 +14,7 @@ public class CircleProgressViewActivity extends AppCompatActivity {
     private CircleProgressView yejiProgress;
     private CircleProgressView shishouProgress;
     private CircleProgressView daikanProgress;
+    private CircleProgressView1 scoreProgress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,11 +23,20 @@ public class CircleProgressViewActivity extends AppCompatActivity {
         initData();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (scoreProgress != null) {
+            scoreProgress.releaseResource();
+        }
+    }
+
     private void initView() {
         setContentView(R.layout.activity_circle_progress_view);
         yejiProgress = (CircleProgressView) findViewById(R.id.yeji_progress);
         daikanProgress = (CircleProgressView) findViewById(R.id.daikan_progress);
         shishouProgress = (CircleProgressView) findViewById(R.id.shishou_progress);
+        scoreProgress = (CircleProgressView1) findViewById(R.id.score_progress);
     }
 
     private void initData() {
@@ -48,6 +58,8 @@ public class CircleProgressViewActivity extends AppCompatActivity {
         shishouProgress.setRoundProgressColor(Color.parseColor("#6F9DFD"));
         shishouProgress.setProgress(100d);
         shishouProgress.setMaxProgress(0);
+        // 设置信用分
+        scoreProgress.setScore(725);
     }
 
     public static void launch(Context context) {
