@@ -159,9 +159,15 @@
             android:name=".arouter.ARouterTest3Activity"
             android:screenOrientation="portrait" />
 
-        <!--HotFix-->
+        <!-- HotFix -->
         <activity
             android:name=".hotfix.SimpleHotFixActivity"
             android:screenOrientation="portrait" />
+
+        <!--RxJava-->
+        <activity
+            android:name=".rxjava.RxJavaTestActivity"
+            android:screenOrientation="portrait" />
     </application>
+
 </manifest>

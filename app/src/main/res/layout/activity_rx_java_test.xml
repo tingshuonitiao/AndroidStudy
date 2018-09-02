@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="#aaaaaa"
+            android:onClick="onLoginSuccessClick"
+            android:padding="8dp"
+            android:text="register_success_login_success"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="#aaaaaa"
+            android:onClick="onLoginFailClick"
+            android:padding="8dp"
+            android:text="register_success_login_fail"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="#aaaaaa"
+            android:onClick="onRegisterFailClick"
+            android:padding="8dp"
+            android:text="register_fail"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="#aaaaaa"
+            android:onClick="onLoadInfoInSequenceClick"
+            android:padding="8dp"
+            android:text="multiple_dialog"
+            android:textSize="14sp" />
+    </LinearLayout>
+</RelativeLayout>

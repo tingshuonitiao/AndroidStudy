@@ -17,6 +17,7 @@ import com.example.tsnt.eventbus.EventBusAActivity;
 import com.example.tsnt.hotfix.SimpleHotFixActivity;
 import com.example.tsnt.mvvm.TestActivity;
 import com.example.tsnt.recyclerview.RecyclerViewMainActivity;
+import com.example.tsnt.rxjava.RxJavaTestActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
@@ -130,6 +131,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initRecyclerViewModel());
         list.add(initARouter());
         list.add(initHotFix());
+        list.add(initRxJava());
         return list;
     }
 
@@ -416,6 +418,16 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SimpleHotFixActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化RxJava模块 ----------
+    private ModuleEntity initRxJava() {
+        return new ModuleEntity("RxJava", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RxJavaTestActivity.launch(context);
             }
         });
     }
