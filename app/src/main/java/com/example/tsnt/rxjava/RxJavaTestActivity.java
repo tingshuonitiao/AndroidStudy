@@ -235,7 +235,7 @@ public class RxJavaTestActivity extends AppCompatActivity {
     }
 
     /**
-     * 获取dialog信息
+     * 获取单个信息
      *
      * @param index
      * @return
@@ -244,9 +244,9 @@ public class RxJavaTestActivity extends AppCompatActivity {
         return Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(final ObservableEmitter<Integer> emitter) throws Exception {
+                // 模拟网络请求
                 SystemClock.sleep(200);
-                long currTime = SystemClock.currentThreadTimeMillis();
-                if (currTime % 2 == 0) {
+                if (hasLoaded()) {
                     emitter.onNext(index + 1);
                 } else {
                     runOnUiThread(new Runnable() {
@@ -266,7 +266,17 @@ public class RxJavaTestActivity extends AppCompatActivity {
     }
 
     /**
-     * 获取某个dialog
+     * 是否展示过该信息
+     *
+     * @return
+     */
+    private boolean hasLoaded() {
+        long currTime = SystemClock.currentThreadTimeMillis();
+        return currTime % 2 == 0;
+    }
+
+    /**
+     * 展示某个信息对应弹窗
      *
      * @param index
      * @param dismissListener
