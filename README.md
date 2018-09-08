@@ -34,7 +34,7 @@
 
 中间带文字的圆形进度条
 
-<img src="picture/CircleProgressView.jpg" width="30%">
+<img src="picture/CircleProgressView.gif" width="30%">
 
 **6. GaugeView**
 
