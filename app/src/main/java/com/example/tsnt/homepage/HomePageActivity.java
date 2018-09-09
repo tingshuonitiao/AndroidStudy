@@ -13,6 +13,7 @@ import com.example.tsnt.android_base.intentservice.TestIntentServiceActivity;
 import com.example.tsnt.android_base.service_lifecycle.ServiceActivity;
 import com.example.tsnt.arouter.ARouterTest1Activity;
 import com.example.tsnt.bitmap.ImageLoader.ImageLoaderActivity;
+import com.example.tsnt.butterknife.ButterKnifeTestActivity;
 import com.example.tsnt.eventbus.EventBusAActivity;
 import com.example.tsnt.hotfix.SimpleHotFixActivity;
 import com.example.tsnt.mvvm.TestActivity;
@@ -132,6 +133,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initARouter());
         list.add(initHotFix());
         list.add(initRxJava());
+        list.add(initButterKnife());
         return list;
     }
 
@@ -428,6 +430,16 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 RxJavaTestActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化RxJava模块 ----------
+    private ModuleEntity initButterKnife() {
+        return new ModuleEntity("ButterKnife", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ButterKnifeTestActivity.launch(context);
             }
         });
     }

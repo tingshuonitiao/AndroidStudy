@@ -164,9 +164,14 @@
             android:name=".hotfix.SimpleHotFixActivity"
             android:screenOrientation="portrait" />
 
-        <!--RxJava-->
+        <!-- RxJava -->
         <activity
             android:name=".rxjava.RxJavaTestActivity"
+            android:screenOrientation="portrait" />
+
+        <!--ButterKnife-->
+        <activity
+            android:name=".butterknife.ButterKnifeTestActivity"
             android:screenOrientation="portrait" />
     </application>
 
