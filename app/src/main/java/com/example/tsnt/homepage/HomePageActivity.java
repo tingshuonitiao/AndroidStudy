@@ -27,6 +27,7 @@ import com.example.tsnt.view.center_pop_view.CenterPopDialog;
 import com.example.tsnt.view.center_pop_view.CenterPopView;
 import com.example.tsnt.view.circle_imageview.CircleImageViewTestActivity;
 import com.example.tsnt.view.circle_progress_view.CircleProgressViewActivity;
+import com.example.tsnt.view.countdownview.CountDownViewTestActivity;
 import com.example.tsnt.view.flip_dialog.FlipDialogActivity;
 import com.example.tsnt.view.gauge.GaugeActivity;
 import com.example.tsnt.view.generate_poster.GeneratePosterActivity;
@@ -124,6 +125,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initRoundAngleImageView());
         list.add(initSelfAdaptingViewPager());
         list.add(initFlipDialog());
+        list.add(initCountDownView());
         list.add(initIntentServicetTest());
         list.add(initServiceLifecyle());
         list.add(initImageLoader());
@@ -327,6 +329,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initCountDownView() {
+        return new ModuleEntity("CountDownView", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CountDownViewTestActivity.launch(context);
             }
         });
     }

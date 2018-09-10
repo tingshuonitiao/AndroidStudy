@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/hour_num1_tv"
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rect_solid_ff5121_radius_1"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/hour_num2_tv"
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/bg_rect_solid_ff5121_radius_1"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"
+        tools:text="8" />
+
+    <TextView
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:gravity="center"
+        android:text="时"
+        android:textColor="#212121"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/min_num1_tv"
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/bg_rect_solid_ff5121_radius_1"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"
+        tools:text="5" />
+
+    <TextView
+        android:id="@+id/min_num2_tv"
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/bg_rect_solid_ff5121_radius_1"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"
+        tools:text="3" />
+
+    <TextView
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:gravity="center"
+        android:text="分"
+        android:textColor="#212121"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/sec_num1_tv"
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/bg_rect_solid_ff5121_radius_1"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"
+        tools:text="4" />
+
+    <TextView
+        android:id="@+id/sec_num2_tv"
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/bg_rect_solid_ff5121_radius_1"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"
+        tools:text="6" />
+
+    <TextView
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:gravity="center"
+        android:text="秒"
+        android:textColor="#212121"
+        android:textSize="12dp" />
+</LinearLayout>

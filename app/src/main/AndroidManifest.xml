@@ -123,6 +123,9 @@
         <activity
             android:name=".view.flip_dialog.FlipDialogActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.countdownview.CountDownViewTestActivity"
+            android:screenOrientation="portrait" />
 
         <!-- MVVM -->
         <activity
@@ -169,7 +172,7 @@
             android:name=".rxjava.RxJavaTestActivity"
             android:screenOrientation="portrait" />
 
-        <!--ButterKnife-->
+        <!-- ButterKnife -->
         <activity
             android:name=".butterknife.ButterKnifeTestActivity"
             android:screenOrientation="portrait" />
