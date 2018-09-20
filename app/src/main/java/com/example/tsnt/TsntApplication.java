@@ -17,7 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 
 public class TsntApplication extends Application {
 
-    public static Application sApplication;
+    private static Application sApplication;
 
     @Override
     public void onCreate() {

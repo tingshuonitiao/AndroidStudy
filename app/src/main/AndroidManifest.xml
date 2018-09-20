@@ -126,6 +126,9 @@
         <activity
             android:name=".view.countdownview.CountDownViewTestActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.select_dialog.SelectDialogActivity"
+            android:screenOrientation="portrait" />
 
         <!-- MVVM -->
         <activity

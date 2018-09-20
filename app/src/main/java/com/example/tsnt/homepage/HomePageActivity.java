@@ -39,6 +39,8 @@ import com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditTextActivity;
 import com.example.tsnt.view.material_design.AppBarLayoutTestActivity;
 import com.example.tsnt.view.rotate_textview.RotateTextViewActivity;
 import com.example.tsnt.view.round_angle_imageview.RoundAngleImageViewActivity;
+import com.example.tsnt.view.select_dialog.SelectDialog;
+import com.example.tsnt.view.select_dialog.SelectDialogActivity;
 import com.example.tsnt.view.self_adapting_view_pager.MainActivity;
 
 import java.util.ArrayList;
@@ -124,8 +126,9 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initRotateTextView());
         list.add(initRoundAngleImageView());
         list.add(initSelfAdaptingViewPager());
-        list.add(initFlipDialog());
         list.add(initCountDownView());
+        list.add(initFlipDialog());
+        list.add(initSelectDialog());
         list.add(initIntentServicetTest());
         list.add(initServiceLifecyle());
         list.add(initImageLoader());
@@ -347,6 +350,15 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FlipDialogActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initSelectDialog() {
+        return new ModuleEntity("SelectDialog", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectDialogActivity.launch(context);
             }
         });
     }
