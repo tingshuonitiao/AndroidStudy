@@ -179,6 +179,11 @@
         <activity
             android:name=".butterknife.ButterKnifeTestActivity"
             android:screenOrientation="portrait" />
+
+        <!--SurfaceView-->
+        <activity
+            android:name="com.example.tsnt.surfaceview.DrawSinFunActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ import com.example.tsnt.hotfix.SimpleHotFixActivity;
 import com.example.tsnt.mvvm.TestActivity;
 import com.example.tsnt.recyclerview.RecyclerViewMainActivity;
 import com.example.tsnt.rxjava.RxJavaTestActivity;
+import com.example.tsnt.surfaceview.DrawSinFunActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
@@ -39,7 +40,6 @@ import com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditTextActivity;
 import com.example.tsnt.view.material_design.AppBarLayoutTestActivity;
 import com.example.tsnt.view.rotate_textview.RotateTextViewActivity;
 import com.example.tsnt.view.round_angle_imageview.RoundAngleImageViewActivity;
-import com.example.tsnt.view.select_dialog.SelectDialog;
 import com.example.tsnt.view.select_dialog.SelectDialogActivity;
 import com.example.tsnt.view.self_adapting_view_pager.MainActivity;
 
@@ -139,6 +139,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initHotFix());
         list.add(initRxJava());
         list.add(initButterKnife());
+        list.add(initSurfaceView());
         return list;
     }
 
@@ -463,6 +464,16 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ButterKnifeTestActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化DrawSinFun模块 ----------
+    private ModuleEntity initSurfaceView() {
+        return new ModuleEntity("SurfaceView", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawSinFunActivity.launch(context);
             }
         });
     }
