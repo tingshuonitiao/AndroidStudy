@@ -18,16 +18,16 @@ import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
     private List<String> mList = new ArrayList<>();
-    private       MyImageLoader mMyImageLoader;
-    private       Context       mContext;
-    private final int           mImageWidth;
-    private       boolean       mCanBeUpdated;
-    private       Drawable      mDefaultBitmapDrawable;
+    private MyImageLoader mMyImageLoader;
+    private Context mContext;
+    private final int mImageWidth;
+    private boolean mCanBeUpdated;
+    private Drawable mDefaultBitmapDrawable;
 
     public GridViewAdapter(List<String> list, Context context) {
         mList = list;
         mContext = context;
-        mDefaultBitmapDrawable = context.getResources().getDrawable(R.drawable.image_default);
+        mDefaultBitmapDrawable = context.getResources().getDrawable(R.mipmap.image_default);
         if (mMyImageLoader == null) {
             mMyImageLoader = MyImageLoader.build(context);
         }

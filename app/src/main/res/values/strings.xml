@@ -1,5 +1,124 @@
 <resources>
     <string name="app_name">AndroidStudy</string>
     <string name="test">华为和联想，都过了而立之年。2017年，华为2全年销售收入预计约6000亿元；2017财年，联想全年营收2767亿元。而利润的差距，更是在10倍之上。回到两者创业的原点，最初几年，联想的营收，甚至一度达到华为的17倍，其风头远远盖过了华为。三十多年间，任正非和柳传志、联想和华为如何上下轮转，重换位次的.作者：财经故事会链接：https://zhuanlan.zhihu.com/p/33058290来源：知乎著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</string>
+    <string name="test1">需求的解决:
+一：适应键盘的弹起。
+我们知道，在Activity中如果要让布局不被软键盘遮挡，方法一般是在清单文件中配置windowSoftInputMode属性， windowSoftInputMode是Android1.5以后的一个新特性，主要是对软键盘操作的，主要有以下属性：
+
+stateUnspecified：软键盘的状态并没有指定，系统将选择一个合适的状态或依赖于主题的设置
+stateUnchanged：当这个activity出现时，软键盘将一直保持在上一个activity里的状态，无论是隐藏还是显示
+stateHidden：用户选择activity时，软键盘总是被隐藏
+stateAlwaysHidden：当该Activity主窗口获取焦点时，软键盘也总是被隐藏的
+stateVisible：软键盘通常是可见的
+stateAlwaysVisible：用户选择activity时，软键盘总是显示的状态
+adjustUnspecified：默认设置，通常由系统自行决定是隐藏还是显示
+adjustResize：该Activity总是调整屏幕的大小以便留出软键盘的空间
+adjustPan：当前窗口的内容将自动移动以便当前焦点从不被键盘覆盖和用户能总是看到输入内容的部分
+我们可以根据需求在清单文件中配置具体的属性，那么如果软键盘是基于Dialog弹出来的话该怎么办呢？毕竟我们没有清单文件来配置Dialog的属性。其实，在清单中配置的属性本质也是告诉当前界面对软键盘这种情况的处理。windowSoftInputMode的属性如果在清单文件中配置的话是这样写的：
+
+    其实在清单文件中的某些配置，我们在Activity也能配置，在Activity中用代码设置话是这样写的：
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+    聪明的你看到这里可能已经看出来什么了，没错，两种方式的实质就是得到当前的窗口实例，来基于当前窗口设置的。我们来进入源码看一下，首先看getWindow()方法：
+    public Window getWindow() { return mWindow; }
+
+    很简单，得到当前的Window实例，再进入setSoftInputMode这个方法：
+
+    public void setSoftInputMode(int mode) {
+    final WindowManager.LayoutParams attrs = getAttributes();
+    if (mode !=   WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED)
+    {
+    attrs.softInputMode = mode; mHasSoftInputMode = true;
+    } else {
+    mHasSoftInputMode = false;
+    }
+    if (mCallback != null) {
+    mCallback.onWindowAttributesChanged(attrs);
+    }
+    }```
+    这个方法很短逻辑也很清晰，我们可以看到，倒数第三行代码，当窗口属性发生变化的时候，mCallback会回调一个方法执行某些操作，那么这个，mCallback是什么呢？在源码中搜索一下你会找到以下代码和注释：
+    /** * Set the Callback interface for this window, used to intercept key
+
+    events and other dynamic operations in the window.
+    @param callback The desired Callback interface.
+    */
+    public void setCallback(Callback callback) {
+    mCallback = callback;
+    }```
+    由注释我们可以看到mCallback是给当前窗口设置的一个回调接口，当窗口发生某些变化的时候可以通过这个回调接口执行某些操作。回到mCallback.onWindowAttributesChanged(attrs)这句代码，首先我们肯定知道，Activity肯定实现了这个接口，那么，还有其他的实现了这个接口吗？找到定义这个接口的地方：
+    This is called whenever the current window attributes change. public void onWindowAttributesChanged(WindowManager.LayoutParams attrs);
+
+    由注释我们也可以清楚的明白这个接口的用途：无论在什么时候都会被调用当窗口属性发生变化。在Android Studio中我们可以点击这个接口定义左边的向上箭头查看接口的实现类，我们发现，dialog也实现了这个接口，那么回到第一个需求，解决方法就简单多了，只需要自定义一个Dialog，然后重写onCreate方法，如下：
+
+    super.onCreate(savedInstanceState);   getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }```
+    其实跟在Activity中设置是一样的。
+
+    {//软件盘关闭       doSomethinh.. } }```
+
+    onLayoutChange这个方法在窗口布局发生变化的时候会被回调，有兴趣的朋友可以去看下源码，注释很清楚。这个回调方法中参数给我们了改变后view的左上右下的坐标，以及改变前view的坐标。
+
+    作者：山水相逢z
+    链接：https://www.jianshu.com/p/9a71a46c77ab
+    來源：简书
+    简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。需求的解决:
+    一：适应键盘的弹起。
+    我们知道，在Activity中如果要让布局不被软键盘遮挡，方法一般是在清单文件中配置windowSoftInputMode属性， windowSoftInputMode是Android1.5以后的一个新特性，主要是对软键盘操作的，主要有以下属性：
+
+    stateUnspecified：软键盘的状态并没有指定，系统将选择一个合适的状态或依赖于主题的设置
+    stateUnchanged：当这个activity出现时，软键盘将一直保持在上一个activity里的状态，无论是隐藏还是显示
+    stateHidden：用户选择activity时，软键盘总是被隐藏
+    stateAlwaysHidden：当该Activity主窗口获取焦点时，软键盘也总是被隐藏的
+    stateVisible：软键盘通常是可见的
+    stateAlwaysVisible：用户选择activity时，软键盘总是显示的状态
+    adjustUnspecified：默认设置，通常由系统自行决定是隐藏还是显示
+    adjustResize：该Activity总是调整屏幕的大小以便留出软键盘的空间
+    adjustPan：当前窗口的内容将自动移动以便当前焦点从不被键盘覆盖和用户能总是看到输入内容的部分
+    我们可以根据需求在清单文件中配置具体的属性，那么如果软键盘是基于Dialog弹出来的话该怎么办呢？毕竟我们没有清单文件来配置Dialog的属性。其实，在清单中配置的属性本质也是告诉当前界面对软键盘这种情况的处理。windowSoftInputMode的属性如果在清单文件中配置的话是这样写的：
+
+    其实在清单文件中的某些配置，我们在Activity也能配置，在Activity中用代码设置话是这样写的：
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+    聪明的你看到这里可能已经看出来什么了，没错，两种方式的实质就是得到当前的窗口实例，来基于当前窗口设置的。我们来进入源码看一下，首先看getWindow()方法：
+    public Window getWindow() { return mWindow; }
+
+    很简单，得到当前的Window实例，再进入setSoftInputMode这个方法：
+
+    public void setSoftInputMode(int mode) {
+    final WindowManager.LayoutParams attrs = getAttributes();
+    if (mode !=   WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED)
+    {
+    attrs.softInputMode = mode; mHasSoftInputMode = true;
+    } else {
+    mHasSoftInputMode = false;
+    }
+    if (mCallback != null) {
+    mCallback.onWindowAttributesChanged(attrs);
+    }
+    }```
+    这个方法很短逻辑也很清晰，我们可以看到，倒数第三行代码，当窗口属性发生变化的时候，mCallback会回调一个方法执行某些操作，那么这个，mCallback是什么呢？在源码中搜索一下你会找到以下代码和注释：
+    /** * Set the Callback interface for this window, used to intercept key
+
+    events and other dynamic operations in the window.
+    @param callback The desired Callback interface.
+    */
+    public void setCallback(Callback callback) {
+    mCallback = callback;
+    }```
+    由注释我们可以看到mCallback是给当前窗口设置的一个回调接口，当窗口发生某些变化的时候可以通过这个回调接口执行某些操作。回到mCallback.onWindowAttributesChanged(attrs)这句代码，首先我们肯定知道，Activity肯定实现了这个接口，那么，还有其他的实现了这个接口吗？找到定义这个接口的地方：
+    This is called whenever the current window attributes change. public void onWindowAttributesChanged(WindowManager.LayoutParams attrs);
+
+    由注释我们也可以清楚的明白这个接口的用途：无论在什么时候都会被调用当窗口属性发生变化。在Android Studio中我们可以点击这个接口定义左边的向上箭头查看接口的实现类，我们发现，dialog也实现了这个接口，那么回到第一个需求，解决方法就简单多了，只需要自定义一个Dialog，然后重写onCreate方法，如下：
+
+    super.onCreate(savedInstanceState);   getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }```
+    其实跟在Activity中设置是一样的。
+
+    的朋友可以去看下源码，注释很清楚。这个回调方法中参数给我们了改变后view的左上右下的坐标，以及改变前view的坐标。
+
+    作者：山水相逢z
+    链接：https://www.jianshu.com/p/9a71a46c77ab
+    來源：简书
+    简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</string>
     <string name="comment_about_kobe">NBA历史上第二得分后卫。NBA史上，纯技术（skill set）最完整的球员之一。也可能是最勤奋的球员之一。NBA史上，最争强好胜的球员之一。比赛强度（intensity）和坚韧度，最强之一。也是最强的个人攻击手之一。以上之一，可以限定为“在此方面可与他相比者不超过五人”。愿意的时候，可以是联盟最好的1、2号位对位防守者（2000-2002，2008）。曾经是联盟最好的面筐攻击手（2001-2003）。历史上最好的中位mid-post背身攻击手之一。2005-08实际上的NBA对比赛影响力第一人——也可以说是最强球员。其优点和缺点，都集中在一点：争强好胜到变态的偏执，导致他成为：A 可能是NBA史上超级巨星里投篮选择最成问题的家伙。B 可能是NBA史上最好的“高难度投篮得手者”tough shot maker。最体现他能力的比赛，不是对猛龙81分，不是对小牛三节62分，不是对太阳的双绝杀。而是：2009年西部半决赛第二场，对火箭的27投16中40分。那场比赛，巴蒂尔和阿泰斯特对付科比，就像是象棋对局。科比的每个无球移动，巴蒂尔都在亦步亦趋。不是在拼技巧，而是在斗脑力。攻防的细节都几近完美。巴蒂尔根本没给科比留出空隙。但科比还是投得进，许多对其他人而言，根本不是机会的球，他就是投得进。在“给自己制造合理的投篮机会”方面，有许多人可以和科比比肩甚至超过他。但“明明不是合理的投篮机会但依然能够果断射进，而且持续一段时间”方面，NBA历史上，科比几乎是绝无仅有的。</string>
 </resources>

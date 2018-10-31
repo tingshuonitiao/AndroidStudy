@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/test1" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/input_tv"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@android:color/black"
+        android:gravity="center_vertical"
+        android:hint="请输入内容"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/color_666666"
+        android:textColorHint="@color/color_bbbbbb"
+        android:textSize="14dp" />
+</LinearLayout>

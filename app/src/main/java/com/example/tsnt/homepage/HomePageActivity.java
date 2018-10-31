@@ -26,6 +26,7 @@ import com.example.tsnt.view.banner.BannerTestActivity;
 import com.example.tsnt.view.base.ViewTestActivity;
 import com.example.tsnt.view.center_pop_view.CenterPopDialog;
 import com.example.tsnt.view.center_pop_view.CenterPopView;
+import com.example.tsnt.view.chat_dialog.ChattingDialogActivity;
 import com.example.tsnt.view.circle_imageview.CircleImageViewTestActivity;
 import com.example.tsnt.view.circle_progress_view.CircleProgressViewActivity;
 import com.example.tsnt.view.countdownview.CountDownViewTestActivity;
@@ -140,6 +141,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initRxJava());
         list.add(initButterKnife());
         list.add(initSurfaceView());
+        list.add(initChatDialog());
         return list;
     }
 
@@ -474,6 +476,16 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DrawSinFunActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化ChatDialog模块 ----------
+    private ModuleEntity initChatDialog() {
+        return new ModuleEntity("ChatDialog", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChattingDialogActivity.launch(context);
             }
         });
     }

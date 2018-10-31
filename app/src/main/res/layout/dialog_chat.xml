@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_f6f6f6"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp">
+
+    <EditText
+        android:id="@+id/input_edt"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_rect_stroke_eeeeee_radius_4"
+        android:gravity="center_vertical"
+        android:hint="请输入内容"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/color_666666"
+        android:textColorHint="@color/color_bbbbbb"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/confirm_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/shape_rect_solid_ff5121_radius_4"
+        android:gravity="center"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:text="确定"
+        android:textColor="@color/white" />
+</LinearLayout>

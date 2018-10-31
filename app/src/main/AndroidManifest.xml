@@ -129,6 +129,10 @@
         <activity
             android:name=".view.select_dialog.SelectDialogActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.chat_dialog.ChattingDialogActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- MVVM -->
         <activity
@@ -180,9 +184,9 @@
             android:name=".butterknife.ButterKnifeTestActivity"
             android:screenOrientation="portrait" />
 
-        <!--SurfaceView-->
+        <!-- SurfaceView -->
         <activity
-            android:name="com.example.tsnt.surfaceview.DrawSinFunActivity"
+            android:name=".surfaceview.DrawSinFunActivity"
             android:screenOrientation="portrait" />
     </application>
 

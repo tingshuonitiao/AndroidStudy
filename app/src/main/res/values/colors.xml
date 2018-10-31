@@ -6,4 +6,9 @@
     <color name="reveal_color">#1b000000</color>
 
     <color name="light_green">#0ac39e</color>
+    <color name="color_f6f6f6">#f6f6f6</color>
+    <color name="color_eeeeee">#eeeeee</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_bbbbbb">#bbbbbb</color>
+    <color name="white">#ffffff</color>
 </resources>

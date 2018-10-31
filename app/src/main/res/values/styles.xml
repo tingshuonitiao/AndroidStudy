@@ -28,4 +28,8 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="ChatDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>
