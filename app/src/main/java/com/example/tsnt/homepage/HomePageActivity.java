@@ -22,6 +22,7 @@ import com.example.tsnt.rxjava.RxJavaTestActivity;
 import com.example.tsnt.surfaceview.DrawSinFunActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
+import com.example.tsnt.view.house_price_view.HousePriceActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
 import com.example.tsnt.view.base.ViewTestActivity;
 import com.example.tsnt.view.center_pop_view.CenterPopDialog;
@@ -59,7 +60,6 @@ public class HomePageActivity extends AppCompatActivity {
 
     private RecyclerView homePageRecyclerView;
 
-    private int distance = 0;
     private List<ModuleEntity> list;
     private boolean isSlidingToBottom;
 
@@ -142,11 +142,11 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initButterKnife());
         list.add(initSurfaceView());
         list.add(initChatDialog());
+        list.add(initHousePrice());
         return list;
     }
 
     // ---------- 以下初始化View相关的模块 ----------
-
     private ModuleEntity initAutoFixedLayout() {
         return new ModuleEntity("AutoFixedLayout", new View.OnClickListener() {
             @Override
@@ -366,8 +366,34 @@ public class HomePageActivity extends AppCompatActivity {
         });
     }
 
-    // ---------- 以下初始化Service相关的模块 ----------
+    private ModuleEntity initSurfaceView() {
+        return new ModuleEntity("SurfaceView", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawSinFunActivity.launch(context);
+            }
+        });
+    }
 
+    private ModuleEntity initChatDialog() {
+        return new ModuleEntity("ChatDialog", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChattingDialogActivity.launch(context);
+            }
+        });
+    }
+
+    private ModuleEntity initHousePrice() {
+        return new ModuleEntity("HousePrice", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HousePriceActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化Service相关的模块 ----------
     private ModuleEntity initIntentServicetTest() {
         return new ModuleEntity("IntentServicetTest", new View.OnClickListener() {
             @Override
@@ -387,7 +413,6 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     // ---------- 以下初始化ImageLoader模块 ----------
-
     private ModuleEntity initImageLoader() {
         return new ModuleEntity("ImageLoader", new View.OnClickListener() {
             @Override
@@ -398,7 +423,6 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     // ---------- 以下初始化MVVM模块 ----------
-
     private ModuleEntity initMVVM() {
         return new ModuleEntity("MVVM", new View.OnClickListener() {
             @Override
@@ -409,7 +433,6 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     // ---------- 以下初始化EventBus模块 ----------
-
     private ModuleEntity initEventBus() {
         return new ModuleEntity("EventBus", new View.OnClickListener() {
             @Override
@@ -420,7 +443,6 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     // ---------- 以下初始化RecyclerView模块 ----------
-
     private ModuleEntity initRecyclerViewModel() {
         return new ModuleEntity("RecyclerView", new View.OnClickListener() {
             @Override
@@ -460,32 +482,12 @@ public class HomePageActivity extends AppCompatActivity {
         });
     }
 
-    // ---------- 以下初始化RxJava模块 ----------
+    // ---------- 以下初始化ButterKnife模块 ----------
     private ModuleEntity initButterKnife() {
         return new ModuleEntity("ButterKnife", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ButterKnifeTestActivity.launch(context);
-            }
-        });
-    }
-
-    // ---------- 以下初始化DrawSinFun模块 ----------
-    private ModuleEntity initSurfaceView() {
-        return new ModuleEntity("SurfaceView", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DrawSinFunActivity.launch(context);
-            }
-        });
-    }
-
-    // ---------- 以下初始化ChatDialog模块 ----------
-    private ModuleEntity initChatDialog() {
-        return new ModuleEntity("ChatDialog", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChattingDialogActivity.launch(context);
             }
         });
     }

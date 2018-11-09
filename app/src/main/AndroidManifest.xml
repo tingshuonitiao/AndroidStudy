@@ -188,6 +188,7 @@
         <activity
             android:name=".surfaceview.DrawSinFunActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.house_price_view.HousePriceActivity"></activity>
     </application>
 
 </manifest>
