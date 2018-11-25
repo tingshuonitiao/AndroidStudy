@@ -78,6 +78,30 @@
 
 <img src="picture/ImageLoader.gif" width="30%">
 
+**13. FligDialog**
+
+简单的翻转动画
+
+<img src="picture/FlipDialog.gif" width="30%">
+
+**14. HousePriceView**
+
+房价折线图
+
+<img src="picture/HousePriceView.gif" width="30%">
+
+**15. RoundAngleImageView**
+
+圆角的ImageView
+
+<img src="picture/RoundAngleImageView.jpg" width="30%">
+
+**16. SurfaceView**
+
+波浪图, 利用SurfaceView实现
+
+<img src="picture/SurfaceView.gif" width="30%">
+
 
 
 
