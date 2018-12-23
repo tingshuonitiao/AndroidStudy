@@ -32,6 +32,14 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
+        <!-- ActivityLifeCycle -->
+        <activity
+            android:name=".android_base.activity_lifecycle.ActivityLifeCycleTest1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".android_base.activity_lifecycle.ActivityLifeCycleTest2Activity"
+            android:screenOrientation="portrait" />
+
         <!-- ServiceLifecycle -->
         <service android:name=".android_base.service_lifecycle.TestService" />
 
@@ -188,7 +196,7 @@
         <activity
             android:name=".surfaceview.DrawSinFunActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.house_price_view.HousePriceActivity"></activity>
+        <activity android:name=".view.house_price_view.HousePriceActivity" />
     </application>
 
 </manifest>

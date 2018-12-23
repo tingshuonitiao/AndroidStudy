@@ -13,8 +13,8 @@ import android.widget.ListView;
 public class MyListView extends ListView {
     private String TAG = "MyListView";
     private MyHorizontalScrollView2 mMyHorizontalScrollView2;
-    private int                     mLastX;
-    private int                     mLastY;
+    private int mLastX;
+    private int mLastY;
 
     public MyListView(Context context) {
         super(context);
@@ -56,28 +56,38 @@ public class MyListView extends ListView {
         return super.dispatchTouchEvent(ev);
     }
 
-    /*@Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "onInterceptTouchEvent");
-        int x = (int) ev.getX();
-        int y = (int) ev.getY();
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mMyHorizontalScrollView2.requestDisallowInterceptTouchEvent(true);
-                Log.d(TAG, "MotionEvent.ACTION_DOWN");
-                break;
-            case MotionEvent.ACTION_MOVE:
-            // TODO: 2017/4/9 why it can not receive MotionEvent.ACTION_MOVE
-                int deltaX = x - mLastX;
-                int deltaY = y - mLastY;
-                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    mMyHorizontalScrollView2.requestDisallowInterceptTouchEvent(false);
-                }
-                Log.d(TAG, "MotionEvent.ACTION_MOVE");
-                break;
-        }
-        mLastX = x;
-        mLastY = y;
-        return super.onInterceptTouchEvent(ev);
-    }*/
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        Log.d(TAG, "onInterceptTouchEvent");
+//        int x = (int) ev.getX();
+//        int y = (int) ev.getY();
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                mMyHorizontalScrollView2.requestDisallowInterceptTouchEvent(true);
+//                Log.d(TAG, "MotionEvent.ACTION_DOWN");
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//
+//                // TODO: 2017/4/9 why it can not receive MotionEvent.ACTION_MOVE
+//                // onInterceptTouchEvent()不是每次都会被调用
+               /* final boolean disallowIntercept = (mGroupFlags & FLAG_DISALLOW_INTERCEPT) != 0;
+                if (!disallowIntercept) {
+                      intercepted = onInterceptTouchEvent(ev);
+                      ev.setAction(action); // restore action in case it was changed
+                } else {
+                      intercepted = false;
+                }*/
+//
+//                int deltaX = x - mLastX;
+//                int deltaY = y - mLastY;
+//                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+//                    mMyHorizontalScrollView2.requestDisallowInterceptTouchEvent(false);
+//                }
+//                Log.d(TAG, "MotionEvent.ACTION_MOVE");
+//                break;
+//        }
+//        mLastX = x;
+//        mLastY = y;
+//        return super.onInterceptTouchEvent(ev);
+//    }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.tsnt.R;
+import com.example.tsnt.android_base.activity_lifecycle.ActivityLifeCycleTest1Activity;
 import com.example.tsnt.android_base.intentservice.TestIntentServiceActivity;
 import com.example.tsnt.android_base.service_lifecycle.ServiceActivity;
 import com.example.tsnt.arouter.ARouterTest1Activity;
@@ -22,7 +23,6 @@ import com.example.tsnt.rxjava.RxJavaTestActivity;
 import com.example.tsnt.surfaceview.DrawSinFunActivity;
 import com.example.tsnt.view.auto_fixed_layout.AutoFixedLayoutTestActivity;
 import com.example.tsnt.view.auto_line_feed_layout.AutoLineFeedLayoutTestActivity;
-import com.example.tsnt.view.house_price_view.HousePriceActivity;
 import com.example.tsnt.view.banner.BannerTestActivity;
 import com.example.tsnt.view.base.ViewTestActivity;
 import com.example.tsnt.view.center_pop_view.CenterPopDialog;
@@ -38,6 +38,7 @@ import com.example.tsnt.view.gluttonous_snake.GluttonousSnakeActivity;
 import com.example.tsnt.view.horizontal_percent_view.HorizontalPercentViewActivity;
 import com.example.tsnt.view.horizontal_scollview.Demo1Activity;
 import com.example.tsnt.view.horizontal_scollview.Demo2Activity;
+import com.example.tsnt.view.house_price_view.HousePriceActivity;
 import com.example.tsnt.view.limit_scroll_edittext.LimitScrollEditTextActivity;
 import com.example.tsnt.view.material_design.AppBarLayoutTestActivity;
 import com.example.tsnt.view.rotate_textview.RotateTextViewActivity;
@@ -130,6 +131,7 @@ public class HomePageActivity extends AppCompatActivity {
         list.add(initCountDownView());
         list.add(initFlipDialog());
         list.add(initSelectDialog());
+        list.add(initActivityLifeCycleTest());
         list.add(initIntentServicetTest());
         list.add(initServiceLifecyle());
         list.add(initImageLoader());
@@ -389,6 +391,16 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HousePriceActivity.launch(context);
+            }
+        });
+    }
+
+    // ---------- 以下初始化Activity相关的模块 ----------
+    private ModuleEntity initActivityLifeCycleTest() {
+        return new ModuleEntity("ActivityLifeCycle", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityLifeCycleTest1Activity.launch(context);
             }
         });
     }
