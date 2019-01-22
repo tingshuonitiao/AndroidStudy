@@ -197,6 +197,11 @@
             android:name=".surfaceview.DrawSinFunActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.house_price_view.HousePriceActivity" />
+
+        <!-- Webview -->
+        <activity
+            android:name=".webview.WebViewTestActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
